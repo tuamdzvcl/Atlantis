@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bếp Trụng Bún Atlantis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ["Inter", "sans-serif"],
+                    },
+                    colors: {
+                        primary: "#0078D4",
+                        secondary: "#F3F4F6",
+                        accent: "#d60000",
+                        timerBg: "#d32f2f",
+                    },
+                    backgroundImage: {
+                        "hero-gradient":
+                            "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800">
+    <!-- Header (Sticky) -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto max-w-6xl px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center">
+                <img src="https://trungbunatlantis.store/wp-content/uploads/2026/06/cropped-Untitled-1-Recovered.png"
+                    alt="Atlantis Logo" class="h-12 object-contain" />
+            </a>
+
+            <!-- Navigation -->
+            <nav class="hidden md:flex gap-8 text-sm font-semibold text-gray-700">
+                <a href="#" class="hover:text-primary transition-colors">Trang chủ</a>
+                <a href="#banggia" class="hover:text-primary transition-colors">Bảng giá</a>
+                <a href="#thongso" class="hover:text-primary transition-colors">Thông số</a>
+                <a href="#chitiet" class="hover:text-primary transition-colors">Chi tiết</a>
+                <a href="#dathang" class="hover:text-primary transition-colors">Đặt hàng</a>
+            </nav>
+
+            <!-- Call Button -->
+            <a href="tel:0329585872"
+                class="bg-primary text-white px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">
+                <i class="ph-fill ph-phone-call text-xl"></i> Gọi điện
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="bg-hero-gradient text-white py-16 lg:py-24 overflow-hidden">
+        <div class="container mx-auto max-w-6xl px-4 flex flex-col lg:flex-row items-center gap-12">
+            <!-- Text Content -->
+            <div class="lg:w-1/2 flex flex-col items-start z-10">
+                <div class="bg-white/20 px-4 py-1 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+                    ✨ Sản phẩm chính hãng 100%
+                </div>
+                <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6">
+                    Bếp Trụng Bún<br /><span class="text-yellow-300">Atlantis</span>
+                </h1>
+
+                <ul class="space-y-4 mb-8 text-lg text-blue-50">
+                    <li class="flex items-center gap-3">
+                        <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
+                        Gia nhiệt siêu tốc, tiết kiệm điện năng
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
+                        Inox 304 cao cấp, chống gỉ sét bền bỉ
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
+                        Bảng điều khiển trực quan, dễ sử dụng
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="ph-fill ph-check-circle text-2xl text-green-400"></i> Đa
+                        dạng mẫu mã cho mọi mô hình kinh doanh
+                    </li>
+                </ul>
+
+                <div class="flex gap-4">
+                    <a href="#banggia"
+                        class="bg-accent text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-red-700 transition-transform hover:scale-105 shadow-xl">
+                        Đặt hàng ngay
+                    </a>
+                    <a href="#chitiet"
+                        class="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-transform hover:scale-105 shadow-xl">
+                        Xem chi tiết
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image -->
+            <div class="lg:w-1/2 relative">
+                <div
+                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/20 rounded-full blur-3xl">
+                </div>
+                <img src="./img/ChatGPT Image Jul 7, 2026, 11_46_47 AM.png
+            " alt="Bếp Trụng Bún Atlantis Hero"
+                    class="relative z-10 w-full rounded-2xl shadow-2xl border-4 border-white/10" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="py-8 bg-white border-b border-gray-200">
+        <div class="container mx-auto max-w-6xl px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="flex flex-col items-center">
+                <i class="ph ph-truck text-4xl text-primary mb-2"></i>
+                <h4 class="font-bold text-gray-800">Giao hàng toàn quốc</h4>
+                <p class="text-sm text-gray-500">Nhanh chóng & an toàn</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="ph ph-arrows-counter-clockwise text-4xl text-primary mb-2"></i>
+                <h4 class="font-bold text-gray-800">Đổi trả dễ dàng</h4>
+                <p class="text-sm text-gray-500">Lỗi 1 đổi 1 trong 7 ngày</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="ph ph-medal text-4xl text-primary mb-2"></i>
+                <h4 class="font-bold text-gray-800">Cam kết chính hãng</h4>
+                <p class="text-sm text-gray-500">Sản phẩm bao gồm VAT</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="ph ph-headset text-4xl text-primary mb-2"></i>
+                <h4 class="font-bold text-gray-800">Hỗ trợ 24/7</h4>
+                <p class="text-sm text-gray-500">Luôn sẵn sàng tư vấn</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotional Pricing Section -->
+    <section id="banggia" class="py-16 bg-gray-50">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 uppercase">
+                    Bảng Giá Khuyến Mãi
+                </h2>
+                <div class="flex justify-center items-center gap-3">
+                    <span class="font-medium text-gray-600">Kết thúc sau:</span>
+                    <div class="flex gap-2">
+                        <div class="bg-timerBg text-white px-3 py-1 rounded font-bold text-lg">
+                            02
+                        </div>
+                        <span class="text-timerBg font-bold">:</span>
+                        <div class="bg-timerBg text-white px-3 py-1 rounded font-bold text-lg">
+                            15
+                        </div>
+                        <span class="text-timerBg font-bold">:</span>
+                        <div class="bg-timerBg text-white px-3 py-1 rounded font-bold text-lg">
+                            45
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full">
+                <!-- Product 1: AL0213 -->
+                <div
+                    class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow border border-gray-100 flex flex-col md:flex-row">
+                    <div
+                        class="relative p-8 bg-secondary flex justify-center items-center group md:w-1/2 h-80 md:h-auto">
+                        <div
+                            class="absolute top-4 left-4 bg-red-600 text-white font-bold px-4 py-1.5 rounded-full text-sm z-10">
+                            -15%
+                        </div>
+                        <img src="./img/ChatGPT Image Jul 7, 2026, 11_46_47 AM.png" alt="Bếp 1 ngăn 2 giỏ"
+                            class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                    </div>
+                    <div class="p-8 md:w-1/2 flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                            Bếp Trụng Bún 1 Ngăn Trùng bát 2 Giỏ Atlantis AL0213
+                        </h3>
+                        <div class="flex gap-4 mb-6 items-end">
+                            <span class="text-3xl font-bold text-accent">2.450.000₫</span>
+                            <span class="text-gray-400 line-through text-lg mb-1">2.900.000₫</span>
+                        </div>
+                        <div class="mb-8 space-y-3 text-base text-gray-600 flex-1">
+                            <p class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i>
+                                Công suất: 2500W</p>
+                            <p class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i>
+                                Dung tích: Phù hợp quán ăn vừa và nhỏ</p>
+                            <p class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i>
+                                Chất liệu: Inox cao cấp chống ăn mòn</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mt-auto">
+                            <a href="#dathang"
+                                class="bg-accent text-white text-center py-4 rounded-lg font-bold hover:bg-red-700 transition-colors shadow-lg">MUA
+                                NGAY</a>
+                            <a href="tel:0329585872"
+                                class="bg-white border-2 border-primary text-primary text-center py-4 rounded-lg font-bold hover:bg-blue-50 transition-colors">GỌI
+                                TƯ VẤN</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specification Table Section -->
+    <section id="thongso" class="py-16 bg-white">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                    So Sánh Thông Số Kỹ Thuật
+                </h2>
+                <p class="text-gray-500">
+                    Lựa chọn mẫu bếp phù hợp nhất với nhu cầu kinh doanh của bạn
+                </p>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl shadow-sm border border-gray-200">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-blue-100 text-gray-800">
+                            <th class="p-4 border-b border-gray-200 font-semibold w-1/3">
+                                Tiêu chí
+                            </th>
+                            <th class="p-4 border-b border-gray-200 font-bold text-primary w-1/3">
+                                AL0213 (1 Ngăn)
+                            </th>
+                            <th class="p-4 border-b border-gray-200 font-bold text-primary w-1/3">
+                                AL0426 (2 Ngăn)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 text-sm md:text-base">
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b border-gray-200 font-medium text-gray-900">
+                                Số ngăn / Số giỏ
+                            </td>
+                            <td class="p-4 border-b border-gray-200">1 Ngăn / 2 Giỏ</td>
+                            <td class="p-4 border-b border-gray-200">2 Ngăn / 4 Giỏ</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b border-gray-200 font-medium text-gray-900">
+                                Kích thước (D x R x C)
+                            </td>
+                            <td class="p-4 border-b border-gray-200">290 x 440 x 300 mm</td>
+                            <td class="p-4 border-b border-gray-200">580 x 440 x 300 mm</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b border-gray-200 font-medium text-gray-900">
+                                Điện áp
+                            </td>
+                            <td class="p-4 border-b border-gray-200">220V / 50Hz</td>
+                            <td class="p-4 border-b border-gray-200">220V / 50Hz</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b border-gray-200 font-medium text-gray-900">
+                                Công suất
+                            </td>
+                            <td class="p-4 border-b border-gray-200">2.5 KW</td>
+                            <td class="p-4 border-b border-gray-200">
+                                2 x 2.0 KW (Tổng 4.0KW)
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 border-b border-gray-200 font-medium text-gray-900">
+                                Chất liệu chính
+                            </td>
+                            <td class="p-4 border-b border-gray-200">Inox cao cấp</td>
+                            <td class="p-4 border-b border-gray-200">Inox cao cấp</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <!-- Solutions Section -->
+    <section class="py-16 bg-white relative overflow-hidden">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+                <!-- Left Content -->
+                <div class="lg:w-7/12">
+                    <p class="text-primary font-bold text-sm uppercase tracking-wider mb-2">Giải pháp cho quán ăn</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 tracking-tight">Ra Món Nhanh Giờ
+                        Cao Điểm</h2>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Nồi trụng mì Atlantis được 2,500+ quán phở, bún bò, hủ tiếu, mì quảng tin dùng:
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 mb-10">
+                        <div class="bg-gray-50/80 flex items-center gap-3 p-4 rounded-xl border border-gray-100">
+                            <i class="ph-fill ph-check text-green-500 text-lg"></i>
+                            <span class="font-medium text-gray-800">Quán Phở Hà Nội</span>
+                        </div>
+                        <div class="bg-gray-50/80 flex items-center gap-3 p-4 rounded-xl border border-gray-100">
+                            <i class="ph-fill ph-check text-green-500 text-lg"></i>
+                            <span class="font-medium text-gray-800">Bún Bò Huế</span>
+                        </div>
+                        <div class="bg-gray-50/80 flex items-center gap-3 p-4 rounded-xl border border-gray-100">
+                            <i class="ph-fill ph-check text-green-500 text-lg"></i>
+                            <span class="font-medium text-gray-800">Hủ Tiếu Nam Vang</span>
+                        </div>
+                        <div class="bg-gray-50/80 flex items-center gap-3 p-4 rounded-xl border border-gray-100">
+                            <i class="ph-fill ph-check text-green-500 text-lg"></i>
+                            <span class="font-medium text-gray-800">Mì Quảng, Cao Lầu</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#EBF3FC] p-6 rounded-xl border-l-4 border-primary flex gap-5">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Anh Minh Tuấn"
+                            class="w-14 h-14 rounded-full object-cover shrink-0 shadow-sm grayscale" />
+                        <div>
+                            <p class="text-gray-700 italic mb-3 font-medium leading-relaxed">"Từ khi dùng nồi Atlantis,
+                                quán tôi ra 50 tô/giờ mà không bị rối. Điện giảm hẳn 300k/tháng so với bếp gas."</p>
+                            <h4 class="font-bold text-gray-900 text-lg">Anh. Minh Tuấn</h4>
+                            <p class="text-sm text-gray-500">Chủ Quán Phở 24h, Q.5 TP.HCM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content (Card) -->
+                <div class="lg:w-5/12 w-full relative">
+                    <!-- Decorative blob -->
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-blue-100/50 rounded-full blur-3xl -z-10">
+                    </div>
+
+                    <div
+                        class="bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] p-8 relative z-10 border border-gray-50">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900">Lợi Ích Khi Dùng</h3>
+                            <span
+                                class="bg-green-50 text-green-600 text-xs font-bold px-3 py-1.5 rounded-full border border-green-100">ROI
+                                3 tháng</span>
+                        </div>
+
+                        <ul class="space-y-0 text-[15px] md:text-base">
+                            <li class="flex justify-between items-center py-4 border-b border-gray-100">
+                                <span class="text-gray-600 font-medium">Tốc độ ra món</span>
+                                <span class="font-bold text-[#14509F] flex items-center gap-1">+70% <i
+                                        class="ph-bold ph-arrow-up text-sm"></i></span>
+                            </li>
+                            <li class="flex justify-between items-center py-4 border-b border-gray-100">
+                                <span class="text-gray-600 font-medium">Tiết kiệm chi phí điện/gas</span>
+                                <span class="font-bold text-[#14509F] flex items-center gap-1">-30% <i
+                                        class="ph-bold ph-arrow-down text-sm"></i></span>
+                            </li>
+                            <li class="flex justify-between items-center py-4 border-b border-gray-100">
+                                <span class="text-gray-600 font-medium">Thời gian đào tạo NV</span>
+                                <span class="font-bold text-[#14509F]">5 phút</span>
+                            </li>
+                            <li class="flex justify-between items-center pt-4">
+                                <span class="text-gray-600 font-medium">Tuổi thọ trung bình</span>
+                                <span class="font-bold text-[#14509F]">5-7 năm</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4 Reasons Section -->
+    <section id="chitiet" class="py-16 bg-gray-50">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    4 Lý Do Nên Chọn Bếp Atlantis
+                </h2>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Reason 1 -->
+                <div
+                    class="flex flex-col sm:flex-row items-center gap-6 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="sm:w-1/2 order-2 sm:order-1">
+                        <div
+                            class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-primary text-xl font-bold mb-4">
+                            1
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Tốc Độ Gia Nhiệt Nhanh Chóng</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Hệ thống mâm nhiệt công suất cao giúp đun sôi nước siêu tốc, rút
+                            ngắn thời gian chờ đợi. Tiết kiệm tối đa thời gian phục vụ khách
+                            hàng, đặc biệt trong những giờ cao điểm.
+                        </p>
+                    </div>
+                    <div class="sm:w-1/2 order-1 sm:order-2">
+                        <img src="https://trungbunatlantis.store/wp-content/uploads/2026/05/Untitled-1.jpg"
+                            alt="Tốc độ gia nhiệt" class="rounded-xl shadow-sm w-full object-cover" />
+                    </div>
+                </div>
+
+                <!-- Reason 2 -->
+                <div
+                    class="flex flex-col sm:flex-row items-center gap-6 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="sm:w-1/2 order-2 sm:order-1">
+                        <div
+                            class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-primary text-xl font-bold mb-4">
+                            2
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Chất Liệu Inox Bền Bỉ</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Vỏ bếp và các khay chứa được làm hoàn toàn bằng Inox sáng bóng,
+                            chống gỉ sét, chịu nhiệt cực tốt và đặc biệt rất dễ dàng vệ sinh
+                            sau mỗi ca làm việc, đảm bảo vệ sinh an toàn thực phẩm.
+                        </p>
+                    </div>
+                    <div class="sm:w-1/2 order-1 sm:order-2">
+                        <img src="https://trungbunatlantis.store/wp-content/uploads/2026/05/Untitled-6.jpg"
+                            alt="Chất liệu Inox" class="rounded-xl shadow-sm w-full object-cover" />
+                    </div>
+                </div>
+
+                <!-- Reason 3 -->
+                <div
+                    class="flex flex-col sm:flex-row items-center gap-6 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="sm:w-1/2 order-2 sm:order-1">
+                        <div
+                            class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-primary text-xl font-bold mb-4">
+                            3
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Thiết Kế Thông Minh, Tiết Kiệm Điện</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Cảm biến nhiệt độ tự động ngắt khi đạt độ sôi và bật lại khi nhiệt
+                            độ giảm, giúp duy trì độ nóng liên tục mà không gây lãng phí điện
+                            năng. Bảng điều khiển riêng biệt vô cùng tiện dụng.
+                        </p>
+                    </div>
+                    <div class="sm:w-1/2 order-1 sm:order-2">
+                        <img src="https://trungbunatlantis.store/wp-content/uploads/2026/05/Untitled-4.jpg"
+                            alt="Tiết kiệm điện" class="rounded-xl shadow-sm w-full object-cover" />
+                    </div>
+                </div>
+
+                <!-- Reason 4 -->
+                <div
+                    class="flex flex-col sm:flex-row items-center gap-6 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="sm:w-1/2 order-2 sm:order-1">
+                        <div
+                            class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-primary text-xl font-bold mb-4">
+                            4
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Nguồn Gốc Xuất Xứ Rõ Ràng</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Thương hiệu Atlantis cam kết phân phối sản phẩm chính hãng, đầy đủ
+                            giấy tờ hóa đơn VAT. Chính sách bảo hành rõ ràng giúp khách hàng
+                            hoàn toàn yên tâm đầu tư lâu dài.
+                        </p>
+                    </div>
+                    <div class="sm:w-1/2 order-1 sm:order-2">
+                        <img src="https://trungbunatlantis.store/wp-content/uploads/2026/05/z7207221430013_0f0cae871f927f056138b5bf37368233-scaled.jpg"
+                            alt="Nguồn gốc rõ ràng" class="rounded-xl shadow-sm w-full object-cover" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- In the Box -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto max-w-6xl px-4 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Trong Hộp Có Gì?</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-secondary p-4 rounded-xl">
+                    <img src="https://trungbunatlantis.store/wp-content/uploads/2026/06/Untitled-1.jpg"
+                        alt="Hộp sản phẩm" class="w-full rounded-lg shadow-sm mb-4 mix-blend-multiply" />
+                    <h4 class="font-bold text-gray-800">Quy cách đóng gói chuẩn</h4>
+                    <p class="text-sm text-gray-600">Được bọc xốp chống sốc an toàn</p>
+                </div>
+                <div class="bg-secondary p-4 rounded-xl">
+                    <img src="https://trungbunatlantis.store/wp-content/uploads/2026/06/phu-kien-trung-bun-doi-2-ngan-4-gio.jpg"
+                        alt="Phụ kiện đi kèm" class="w-full rounded-lg shadow-sm mb-4 mix-blend-multiply" />
+                    <h4 class="font-bold text-gray-800">Đầy đủ phụ kiện</h4>
+                    <p class="text-sm text-gray-600">
+                        Bếp, Nắp đậy, Giỏ trụng, Tấm lót đáy
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comment Section -->
+    <section id="binhluan" class="py-16 bg-gray-50 border-t border-gray-200">
+        <div class="container mx-auto max-w-6xl px-4">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Bình luận & Đánh giá</h2>
+
+            <!-- Comment Input -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-10 relative">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div
+                        class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center shrink-0 hidden sm:flex">
+                        <i class="ph-fill ph-user text-2xl text-primary"></i>
+                    </div>
+                    <div class="flex-1">
+                        <textarea rows="3" placeholder="Xin mời để lại câu hỏi hoặc bình luận về sản phẩm..."
+                            class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-gray-700 transition-shadow hover:shadow-sm"></textarea>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-3 gap-3">
+                            <div class="flex gap-3 w-full sm:w-auto">
+                                <input type="text" placeholder="Họ tên"
+                                    class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary flex-1 sm:w-40 transition-colors" />
+                                <input type="tel" placeholder="Số điện thoại"
+                                    class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary flex-1 sm:w-40 transition-colors" />
+                            </div>
+                            <button
+                                class="bg-primary text-white font-bold py-2.5 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto shadow-sm hover:shadow">Gửi
+                                bình luận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comment List -->
+            <div class="space-y-6">
+                <!-- Comment 1 -->
+                <div class="flex gap-4">
+                    <div
+                        class="w-10 h-10 bg-green-100 text-green-700 rounded-full flex items-center justify-center shrink-0 font-bold text-lg">
+                        N
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 flex-1">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <h4 class="font-bold text-gray-900">Hoàng Nam</h4>
+                            <span
+                                class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium flex items-center"><i
+                                    class="ph-fill ph-check-circle mr-1"></i>Đã mua hàng</span>
+                            <span class="text-sm text-gray-500 ml-auto">2 giờ trước</span>
+                        </div>
+                        <p class="text-gray-700">Sản phẩm dùng rất êm, nồi sôi nhanh đúng như quảng cáo. Bữa trước dùng
+                            gas tốn kém quá nay chuyển qua điện thấy nhàn hẳn. Shop tư vấn nhiệt tình, giao hàng nhanh.
+                            Cho shop 5 sao nhé!</p>
+                        <div class="flex gap-4 mt-3 text-sm text-gray-500">
+                            <button class="hover:text-primary flex items-center gap-1 font-medium transition-colors"><i
+                                    class="ph ph-thumbs-up text-lg"></i> Hữu ích (12)</button>
+                            <button class="hover:text-primary flex items-center gap-1 font-medium transition-colors"><i
+                                    class="ph ph-chat-circle text-lg"></i> Trả lời</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment 2 -->
+                <div class="flex gap-4">
+                    <div
+                        class="w-10 h-10 bg-orange-100 text-orange-700 rounded-full flex items-center justify-center shrink-0 font-bold text-lg">
+                        H
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 flex-1">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <h4 class="font-bold text-gray-900">Trần Thị Hoa</h4>
+                            <span class="text-sm text-gray-500 ml-auto">1 ngày trước</span>
+                        </div>
+                        <p class="text-gray-700">Cho mình hỏi dòng 2 ngăn có thể điều chỉnh nhiệt độ độc lập cho từng
+                            ngăn không ạ? Quán mình đôi khi vắng khách chỉ cần bật 1 bên.</p>
+                        <div class="flex gap-4 mt-3 text-sm text-gray-500">
+                            <button class="hover:text-primary flex items-center gap-1 font-medium transition-colors"><i
+                                    class="ph ph-thumbs-up text-lg"></i> Hữu ích (2)</button>
+                            <button class="hover:text-primary flex items-center gap-1 font-medium transition-colors"><i
+                                    class="ph ph-chat-circle text-lg"></i> Trả lời</button>
+                        </div>
+
+                        <!-- Reply -->
+                        <div class="mt-4 flex gap-3 sm:gap-4 relative">
+                            <!-- Line connecting reply -->
+                            <div
+                                class="absolute -left-7 sm:-left-9 top-0 w-6 sm:w-8 h-6 border-l-2 border-b-2 border-gray-200 rounded-bl-xl">
+                            </div>
+
+                            <div
+                                class="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-full flex items-center justify-center shrink-0 z-10">
+                                <i class="ph-fill ph-headset text-white"></i>
+                            </div>
+                            <div class="bg-blue-50/50 p-4 rounded-xl rounded-tl-none border border-blue-100 flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h4 class="font-bold text-primary">Atlantis Store <span
+                                            class="bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-sm ml-1 uppercase font-semibold">QTV</span>
+                                    </h4>
+                                    <span class="text-xs text-gray-500 ml-auto">23 giờ trước</span>
+                                </div>
+                                <p class="text-gray-700 text-sm">Chào chị Hoa, dạ dòng bếp 2 ngăn của Atlantis hoàn toàn
+                                    có thể điều chỉnh nhiệt độ và bật tắt độc lập cho từng ngăn chị nhé. Rất phù hợp để
+                                    tiết kiệm điện trong giờ thấp điểm ạ. Chị để lại SĐT shop liên hệ tư vấn thêm nhé!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button
+                    class="border border-gray-300 text-gray-600 px-8 py-2.5 rounded-full hover:bg-gray-100 font-medium transition-colors hover:text-gray-900 shadow-sm">Xem
+                    thêm bình luận</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form -->
+    <section id="dathang" class="py-16 bg-blue-50 border-t border-blue-100">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+                <!-- Left Banner -->
+                <div
+                    class="md:w-5/12 bg-hero-gradient p-8 text-white flex flex-col justify-center relative overflow-hidden">
+                    <!-- Background Accent -->
+                    <div
+                        class="absolute -top-24 -right-24 w-64 h-64 bg-white opacity-10 rounded-full blur-2xl pointer-events-none">
+                    </div>
+
+                    <h3 class="text-2xl lg:text-3xl font-extrabold mb-1 uppercase leading-tight">
+                        Đặt Hàng Hôm Nay
+                    </h3>
+                    <h3 class="text-2xl lg:text-3xl font-extrabold mb-6 uppercase text-yellow-300 leading-tight">
+                        Nhận Ngay Ưu Đãi
+                    </h3>
+
+                    <!-- Countdown Timer -->
+                    <div class="bg-white/10 rounded-xl p-4 mb-8 border border-white/20 backdrop-blur-sm">
+                        <p class="text-sm font-semibold mb-3 uppercase tracking-wider text-blue-50 text-center">Ưu đãi
+                            hết hạn sau</p>
+                        <div class="flex justify-center gap-3">
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class="bg-white text-primary font-bold text-2xl w-14 h-14 flex items-center justify-center rounded-lg shadow-inner">
+                                    02</div>
+                                <span class="text-[10px] mt-1.5 uppercase font-bold text-blue-100">Giờ</span>
+                            </div>
+                            <span class="text-2xl font-bold mt-2.5 text-blue-200">:</span>
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class="bg-white text-primary font-bold text-2xl w-14 h-14 flex items-center justify-center rounded-lg shadow-inner">
+                                    49</div>
+                                <span class="text-[10px] mt-1.5 uppercase font-bold text-blue-100">Phút</span>
+                            </div>
+                            <span class="text-2xl font-bold mt-2.5 text-blue-200">:</span>
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class="bg-white text-primary font-bold text-2xl w-14 h-14 flex items-center justify-center rounded-lg shadow-inner">
+                                    36</div>
+                                <span class="text-[10px] mt-1.5 uppercase font-bold text-blue-100">Giây</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offers List -->
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-gift text-2xl text-yellow-300 mt-0.5 shrink-0"></i>
+                            <span class="font-medium text-blue-50 text-[15px] leading-snug">Tặng 01 cảm biến chống cháy
+                                dự phòng</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-truck text-2xl text-yellow-300 mt-0.5 shrink-0"></i>
+                            <span class="font-medium text-blue-50 text-[15px] leading-snug">Miễn phí vận chuyển</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-percent text-2xl text-yellow-300 mt-0.5 shrink-0"></i>
+                            <span class="font-medium text-blue-50 text-[15px] leading-snug">Hỗ trợ 90% vận chuyển dòng
+                                Basic</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-package text-2xl text-yellow-300 mt-0.5 shrink-0"></i>
+                            <span class="font-medium text-blue-50 text-[15px] leading-snug">Đủ bộ linh kiện: nồi, nắp,
+                                giỏ, khay đỡ</span>
+                        </li>
+                    </ul>
+
+                    <!-- Hotline Card -->
+                    <div
+                        class="mt-auto bg-white/10 rounded-xl p-4 flex items-center gap-4 border border-white/20 hover:bg-white/20 transition-colors">
+                        <div
+                            class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shrink-0 shadow-lg">
+                            <i class="ph-fill ph-phone-call text-2xl animate-pulse"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-blue-100 font-medium uppercase tracking-wider mb-0.5">Hotline 24/7
+                            </p>
+                            <a href="tel:0329585872"
+                                class="text-2xl font-bold text-yellow-300 hover:text-white transition-colors block leading-none">0329.585.872</a>
+                            <p class="text-xs text-blue-100 mt-1 font-medium">Tư vấn & bán hàng</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="md:w-7/12 p-8">
+                    <h4 class="text-xl font-bold text-gray-800 mb-6">
+                        Thông Tin Đặt Hàng
+                    </h4>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Chọn sản phẩm *</label>
+                            <select
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
+                                <option>Bếp 1 Ngăn 2 Giỏ (AL0213) - 2.450.000₫</option>
+                                <option>Bếp 2 Ngăn 4 Giỏ (AL0426) - 3.950.000₫</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Họ và tên *</label>
+                            <input type="text" placeholder="Nhập họ tên của bạn"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại *</label>
+                            <input type="tel" placeholder="Nhập số điện thoại"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ giao hàng *</label>
+                            <textarea rows="3" placeholder="Nhập địa chỉ chi tiết"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                        </div>
+
+                        <div class="flex items-center gap-2 mt-2">
+                            <input type="checkbox" id="vat"
+                                class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2" />
+                            <label for="vat" class="text-sm text-gray-700">Tôi muốn xuất hóa đơn VAT</label>
+                        </div>
+
+                        <button type="button"
+                            class="w-full bg-accent text-white font-bold text-lg py-4 rounded-lg hover:bg-red-700 transition-colors mt-4 shadow-lg">
+                            HOÀN TẤT ĐẶT HÀNG
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1f2937] text-gray-300 pt-16 pb-8 border-t-4 border-primary">
+        <div class="container mx-auto max-w-6xl px-4 grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <img src="https://trungbunatlantis.store/wp-content/uploads/2026/06/cropped-Untitled-1-Recovered.png"
+                    alt="Atlantis Logo" class="h-12 bg-white p-2 rounded mb-6 object-contain" />
+                <p class="text-sm leading-relaxed text-gray-400">
+                    Atlantis là thương hiệu uy tín cung cấp các dòng thiết bị nhà bếp
+                    công nghiệp chất lượng cao, mang đến giải pháp tối ưu cho mọi mô
+                    hình nhà hàng, quán ăn.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold text-lg mb-6 uppercase">Liên Hệ</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-start gap-3">
+                        <i class="ph-fill ph-map-pin text-xl text-primary mt-0.5"></i>
+                        <span>Showroom: Khu vực TP.HCM / Hà Nội</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="ph-fill ph-phone text-xl text-primary"></i>
+                        <span>Hotline:
+                            <a href="tel:0329585872"
+                                class="text-white font-bold hover:text-primary">0329.585.872</a></span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="ph-fill ph-envelope text-xl text-primary"></i>
+                        <span>Email: contact@trungbunatlantis.store</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold text-lg mb-6 uppercase">
+                    Chính Sách
+                </h4>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors">Chính sách bảo hành</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors">Chính sách đổi trả</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors">Chính sách giao hàng</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors">Bảo mật thông tin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-500">
+            <p>&copy; 2026 Atlantis Store. Tất cả các quyền được bảo lưu.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
