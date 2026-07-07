@@ -76,7 +76,7 @@
                     ✨ Sản phẩm chính hãng 100%
                 </div>
                 <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6">
-                    Bếp Trụng Bún<br /><span class="text-yellow-300">Atlantis</span>
+                    Bếp Trụng Bún Và Bát<br /><span class="text-yellow-300">Atlantis</span>
                 </h1>
 
                 <ul class="space-y-4 mb-8 text-lg text-blue-50">
@@ -440,7 +440,7 @@
                         </p>
                     </div>
                     <div class="sm:w-1/2 order-1 sm:order-2">
-                        <img src="https://trungbunatlantis.store/wp-content/uploads/2026/05/Untitled-4.jpg"
+                        <img src="./img/z7345484422385_cc140105b9589e0f9cfadc51e8cb4d4c-Recovered.jpg"
                             alt="Tiết kiệm điện" class="rounded-xl shadow-sm w-full object-cover" />
                     </div>
                 </div>
@@ -800,6 +800,64 @@
             <p>&copy; 2026 Atlantis Store. Tất cả các quyền được bảo lưu.</p>
         </div>
     </footer>
+
+    <!-- Chat Button & Box -->
+    <button id="chatToggleBtn" title="Chat tư vấn"
+        class="fixed bottom-[88px] right-8 bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 z-50 focus:outline-none">
+        <i class="ph-bold ph-chat-teardrop-dots text-2xl animate-pulse"></i>
+    </button>
+
+    <div id="chatBoxContainer"
+        class="fixed bottom-[144px] right-8 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden opacity-0 translate-y-10 invisible transition-all duration-300 flex flex-col origin-bottom-right">
+        <!-- Chat Header -->
+        <div class="bg-primary text-white p-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center relative">
+                    <i class="ph-fill ph-robot text-xl"></i>
+                    <span
+                        class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 border-2 border-primary rounded-full"></span>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm">Atlantis Support</h4>
+                    <p class="text-[10px] opacity-80">Trực tuyến</p>
+                </div>
+            </div>
+            <button id="closeChatBtn" class="text-white hover:text-gray-200 transition-colors focus:outline-none">
+                <i class="ph-bold ph-x text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="chatMessages" class="h-72 p-4 overflow-y-auto bg-gray-50 flex flex-col gap-3">
+            <div class="flex gap-2 max-w-[85%]">
+                <div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center shrink-0 mt-1">
+                    <i class="ph-fill ph-robot text-white text-[10px]"></i>
+                </div>
+                <div
+                    class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100 leading-relaxed">
+                    Bạn muốn tư vấn sản phẩm gì ạ? 👋
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="p-3 bg-white border-t border-gray-100 flex items-center gap-2">
+            <input id="chatInput" type="text" placeholder="Nhập tin nhắn..."
+                class="flex-1 border border-gray-200 focus:outline-none focus:border-primary text-sm bg-gray-50 rounded-full px-4 py-2 transition-colors" />
+            <button id="sendChatBtn"
+                class="w-9 h-9 bg-primary text-white rounded-full flex items-center justify-center hover:bg-blue-700 shrink-0 transition-colors focus:outline-none">
+                <i class="ph-fill ph-paper-plane-tilt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scroll To Top Button -->
+    <button id="scrollToTopBtn" title="Lên đầu trang"
+        class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 opacity-0 translate-y-10 invisible z-50 focus:outline-none">
+        <i class="ph-bold ph-arrow-up text-xl"></i>
+    </button>
+
+    <script src="./script.js"></script>
 </body>
 
 </html>
