@@ -21,13 +21,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Countdown Timer Functionality
+    const hoursEls = document.querySelectorAll("[data-timer='hours']");
+    const minutesEls = document.querySelectorAll("[data-timer='minutes']");
+    const secondsEls = document.querySelectorAll("[data-timer='seconds']");
+
+    // Loop through all timers on the page
+    for (let i = 0; i < hoursEls.length; i++) {
+        const hoursEl = hoursEls[i];
+        const minutesEl = minutesEls[i];
+        const secondsEl = secondsEls[i];
+
+        if (hoursEl && minutesEl && secondsEl) {
+            let hours = parseInt(hoursEl.innerText, 10) || 0;
+            let minutes = parseInt(minutesEl.innerText, 10) || 0;
+            let seconds = parseInt(secondsEl.innerText, 10) || 0;
+
+            let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+            const updateTimer = () => {
+                if (totalSeconds <= 0) return; // Stop at 0
+                totalSeconds--;
+
+                const h = Math.floor(totalSeconds / 3600);
+                const m = Math.floor((totalSeconds % 3600) / 60);
+                const s = totalSeconds % 60;
+
+                hoursEl.innerText = h.toString().padStart(2, '0');
+                minutesEl.innerText = m.toString().padStart(2, '0');
+                secondsEl.innerText = s.toString().padStart(2, '0');
+            };
+
+            setInterval(updateTimer, 1000);
+        }
+    }
+
+    // Testimonial Carousel Functionality
+    const testimonialTrack = document.getElementById("testimonialTrack");
+    if (testimonialTrack) {
+        let currentSlide = 0;
+        const totalSlides = testimonialTrack.children.length;
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            testimonialTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }, 4000); // Change slide every 4 seconds
+    }
+
     // Chat box functionality
     const chatToggleBtn = document.getElementById("chatToggleBtn");
     const chatBoxContainer = document.getElementById("chatBoxContainer");
     const closeChatBtn = document.getElementById("closeChatBtn");
 
     if (chatToggleBtn && chatBoxContainer && closeChatBtn) {
-        
+
         function openChat() {
             chatBoxContainer.classList.remove("opacity-0", "translate-y-10", "invisible");
             chatBoxContainer.classList.add("opacity-100", "translate-y-0", "visible");
@@ -48,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatToggleBtn.addEventListener("click", (event) => {
             event.stopPropagation(); // Cực kỳ quan trọng: Ngăn không cho sự kiện click lan ra document
             const isVisible = chatBoxContainer.classList.contains("visible");
-            
+
             if (isVisible) {
                 closeChat();
             } else {
@@ -66,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener("click", (event) => {
             const isVisible = chatBoxContainer.classList.contains("visible");
             const isClickOutside = !chatBoxContainer.contains(event.target);
-            
+
             if (isVisible && isClickOutside) {
                 closeChat();
             }
@@ -144,5 +191,131 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+    }
+
+    // Product Gallery & Lightbox
+    const productImages = [
+        "./img/ChatGPT Image Jul 7, 2026, 11_46_47 AM.png",
+        "./img/z7345484422385_cc140105b9589e0f9cfadc51e8cb4d4c-Recovered.jpg",
+        "https://trungbunatlantis.store/wp-content/uploads/2026/05/Untitled-1.jpg",
+        "img/z8019800062555_272a80831c1cb3ac8737d5b38051fefe.jpg",
+        "img/z8019800079076_b7ad02663c5dcf9b4966d7c15c79f87b.jpg",
+        "img/z8019800079077_37071f7ae8bff0d7eef93b9d173b6395.jpg",
+        "img/z8019800079079_32678d2b747ba83090caced61e348c46.jpg"
+    ];
+    let currentImageIndex = 0;
+
+    // Render product thumbnails on page load
+    const thumbnailsContainer = document.getElementById('productThumbnailsContainer');
+    if (thumbnailsContainer) {
+        thumbnailsContainer.innerHTML = productImages.map((src, i) => `
+            <button onclick="changeMainImage(${i})" class="w-16 h-16 rounded-lg border-2 overflow-hidden shrink-0 product-thumb transition-all ${i === 0 ? 'border-primary' : 'border-transparent opacity-70 hover:opacity-100 hover:border-gray-300'}">
+                <img src="${src}" class="w-full h-full object-cover" />
+            </button>
+        `).join('');
+    }
+    window.changeMainImage = (index) => {
+        currentImageIndex = index;
+        const mainImg = document.getElementById('mainProductImage');
+        if (mainImg) mainImg.src = productImages[index];
+
+        // Update thumbnails styles
+        const thumbs = document.querySelectorAll('.product-thumb');
+        thumbs.forEach((thumb, i) => {
+            if (i === index) {
+                thumb.classList.add('border-primary');
+                thumb.classList.remove('border-transparent', 'opacity-70');
+            } else {
+                thumb.classList.remove('border-primary');
+                thumb.classList.add('border-transparent', 'opacity-70');
+            }
+        });
+    };
+
+    // Lightbox Functions
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImage');
+    const lightboxThumbnailsContainer = document.getElementById('lightboxThumbnails');
+
+    window.openLightbox = () => {
+        if (!lightbox || !lightboxImg) return;
+
+        lightboxImg.src = productImages[currentImageIndex];
+
+        // Render thumbnails in lightbox
+        if (lightboxThumbnailsContainer) {
+            lightboxThumbnailsContainer.innerHTML = productImages.map((src, i) => `
+                <button onclick="updateLightboxImage(event, ${i})" class="w-16 h-16 md:w-20 md:h-20 shrink-0 border-2 rounded-lg overflow-hidden transition-all ${i === currentImageIndex ? 'border-primary' : 'border-transparent opacity-50 hover:opacity-100'}">
+                    <img src="${src}" class="w-full h-full object-cover" />
+                </button>
+            `).join('');
+        }
+
+        // Show lightbox
+        lightbox.classList.remove('hidden');
+        // Trigger reflow
+        void lightbox.offsetWidth;
+        lightbox.classList.remove('opacity-0');
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+            lightboxImg.classList.remove('scale-95');
+            lightboxImg.classList.add('scale-100');
+        }, 10);
+    };
+
+    window.closeLightbox = () => {
+        if (!lightbox || !lightboxImg) return;
+
+        lightbox.classList.add('opacity-0');
+        lightboxImg.classList.remove('scale-100');
+        lightboxImg.classList.add('scale-95');
+
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = '';
+        }, 300);
+    };
+
+    window.updateLightboxImage = (event, index) => {
+        if (event) event.stopPropagation();
+        currentImageIndex = index;
+        lightboxImg.src = productImages[currentImageIndex];
+        changeMainImage(index); // Sync with main page
+
+        // Update thumbnail borders in lightbox
+        if (lightboxThumbnailsContainer) {
+            const lbThumbs = lightboxThumbnailsContainer.querySelectorAll('button');
+            lbThumbs.forEach((thumb, i) => {
+                if (i === currentImageIndex) {
+                    thumb.classList.add('border-primary');
+                    thumb.classList.remove('border-transparent', 'opacity-50');
+                } else {
+                    thumb.classList.remove('border-primary');
+                    thumb.classList.add('border-transparent', 'opacity-50');
+                }
+            });
+        }
+    };
+
+    window.prevLightboxImage = (event) => {
+        if (event) event.stopPropagation();
+        currentImageIndex = (currentImageIndex - 1 + productImages.length) % productImages.length;
+        updateLightboxImage(null, currentImageIndex);
+    };
+
+    window.nextLightboxImage = (event) => {
+        if (event) event.stopPropagation();
+        currentImageIndex = (currentImageIndex + 1) % productImages.length;
+        updateLightboxImage(null, currentImageIndex);
+    };
+
+    // Close lightbox on click outside
+    if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target.closest('#lightboxThumbnails') === null) {
+                closeLightbox();
+            }
+        });
     }
 });
