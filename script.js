@@ -42,14 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const initialHours = parseInt(hoursEls[0].innerText, 10) || 0;
     const initialMinutes = parseInt(minutesEls[0].innerText, 10) || 0;
     const initialSeconds = parseInt(secondsEls[0].innerText, 10) || 0;
-    const totalInitialSeconds = initialHours * 3600 + initialMinutes * 60 + initialSeconds;
+    const totalInitialSeconds =
+      initialHours * 3600 + initialMinutes * 60 + initialSeconds;
 
     // Dùng sessionStorage: Giữ thời gian khi F5 tải lại, nhưng sẽ bị reset khi đóng tab hoặc thoát trang
-    let countdownEndTime = sessionStorage.getItem('atlantisCountdownEndTime');
+    let countdownEndTime = sessionStorage.getItem("atlantisCountdownEndTime");
 
     if (!countdownEndTime) {
       countdownEndTime = Date.now() + totalInitialSeconds * 1000;
-      sessionStorage.setItem('atlantisCountdownEndTime', countdownEndTime);
+      sessionStorage.setItem("atlantisCountdownEndTime", countdownEndTime);
     } else {
       countdownEndTime = parseInt(countdownEndTime, 10);
     }
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (remainingSeconds <= 0) {
         // Cơ chế hết thời gian tự động chạy lại tiếp
         countdownEndTime = Date.now() + totalInitialSeconds * 1000;
-        sessionStorage.setItem('atlantisCountdownEndTime', countdownEndTime);
+        sessionStorage.setItem("atlantisCountdownEndTime", countdownEndTime);
         remainingSeconds = totalInitialSeconds;
       }
 
@@ -228,7 +229,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Product Gallery & Lightbox
   const productImages = [
-    "./img/trungbun2rovabat.png",
     "./img/z7345484422385_cc140105b9589e0f9cfadc51e8cb4d4c-Recovered.jpg",
     "https://trungbunatlantis.store/wp-content/uploads/2026/05/Untitled-1.jpg",
     "img/z8019800062555_272a80831c1cb3ac8737d5b38051fefe.jpg",
@@ -241,19 +241,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Render product thumbnails function
   window.renderThumbnailsUI = () => {
-    const thumbnailsContainer = document.getElementById("productThumbnailsContainer");
+    const thumbnailsContainer = document.getElementById(
+      "productThumbnailsContainer"
+    );
     if (thumbnailsContainer) {
       thumbnailsContainer.innerHTML = productImages
         .map(
           (src, i) => `
-              <button onclick="changeMainImage(${i})" class="w-14 h-14 rounded-lg border-2 overflow-hidden shrink-0 product-thumb transition-all ${i === 0
+              <button onclick="changeMainImage(${i})" class="w-14 h-14 rounded-lg border-2 overflow-hidden shrink-0 product-thumb transition-all ${
+            i === 0
               ? "border-primary"
               : "border-transparent opacity-70 hover:opacity-100 hover:border-gray-300"
-            }">
-          ${src.endsWith(".mp4")
+          }">
+          ${
+            src.endsWith(".mp4")
               ? `<video muted playsinline preload="metadata" src="${src}" class="w-full h-full object-cover"><source src="${src}" type="video/mp4"></video>`
               : `<img src="${src}" class="w-full h-full object-cover" />`
-            }
+          }
               </button>
           `
         )
@@ -320,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
           playPromise.catch(() => {
             // Nếu bị chặn, tự động chuyển sang tắt tiếng để vẫn chạy được
             video.muted = true;
-            video.play().catch(() => { });
+            video.play().catch(() => {});
           });
         }
       }
@@ -343,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (playPromise !== undefined) {
             playPromise.catch(() => {
               mediaEl.muted = true;
-              mediaEl.play().catch(() => { });
+              mediaEl.play().catch(() => {});
             });
           }
         }
@@ -370,14 +374,16 @@ document.addEventListener("DOMContentLoaded", () => {
       lightboxThumbnailsContainer.innerHTML = productImages
         .map(
           (src, i) => `
-                <button onclick="updateLightboxImage(event, ${i})" class="w-14 h-14 md:w-20 md:h-20 shrink-0 border-2 rounded-lg overflow-hidden transition-all ${i === currentImageIndex
+                <button onclick="updateLightboxImage(event, ${i})" class="w-14 h-14 md:w-20 md:h-20 shrink-0 border-2 rounded-lg overflow-hidden transition-all ${
+            i === currentImageIndex
               ? "border-primary"
               : "border-transparent opacity-50 hover:opacity-100"
-            }">
-                   ${src.endsWith(".mp4")
-              ? `<video muted playsinline preload="metadata" src="${src}" class="w-full h-full object-cover"><source src="${src}" type="video/mp4"></video>`
-              : `<img src="${src}" class="w-full h-full object-cover" />`
-            }
+          }">
+                   ${
+                     src.endsWith(".mp4")
+                       ? `<video muted playsinline preload="metadata" src="${src}" class="w-full h-full object-cover"><source src="${src}" type="video/mp4"></video>`
+                       : `<img src="${src}" class="w-full h-full object-cover" />`
+                   }
                 </button>
             `
         )
@@ -462,19 +468,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Helper
-  const isValidPhone = (phone) => /^(0|\+84)(3|5|7|8|9)[0-9]{8}$/.test(phone.replace(/\s+/g, ''));
+  const isValidPhone = (phone) =>
+    /^(0|\+84)(3|5|7|8|9)[0-9]{8}$/.test(phone.replace(/\s+/g, ""));
 
   // SweetAlert2 Toast Setup
   const Toast = Swal.mixin({
     toast: true,
-    position: 'top-end',
+    position: "top-end",
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
     didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
   });
 
   // Comment Submission Logic
@@ -491,7 +498,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const phone = commentPhone.value.trim();
 
       if (!text) {
-        Toast.fire({ icon: "error", title: "Vui lòng nhập nội dung bình luận." });
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng nhập nội dung bình luận.",
+        });
         return;
       }
       if (!name) {
@@ -499,7 +509,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       if (!phone || !isValidPhone(phone)) {
-        Toast.fire({ icon: "error", title: "Vui lòng nhập số điện thoại hợp lệ (10 số)." });
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng nhập số điện thoại hợp lệ (10 số).",
+        });
         return;
       }
 
@@ -510,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "bg-purple-100 text-purple-700",
         "bg-pink-100 text-pink-700",
         "bg-indigo-100 text-indigo-700",
-        "bg-teal-100 text-teal-700"
+        "bg-teal-100 text-teal-700",
       ];
       const colorClass = colors[Math.floor(Math.random() * colors.length)];
 
@@ -552,14 +565,16 @@ document.addEventListener("DOMContentLoaded", () => {
       Swal.fire({
         icon: "success",
         title: "Thành công!",
-        text: "Bình luận của bạn đã được gửi thành công."
+        text: "Bình luận của bạn đã được gửi thành công.",
       });
     });
   }
 
   // Load more comments and Lead Collection logic
   const loadMoreCommentsBtn = document.getElementById("loadMoreCommentsBtn");
-  const loadMoreCommentsContainer = document.getElementById("loadMoreCommentsContainer");
+  const loadMoreCommentsContainer = document.getElementById(
+    "loadMoreCommentsContainer"
+  );
   const leadCollectionModal = document.getElementById("leadCollectionModal");
   const closeLeadModalBtn = document.getElementById("closeLeadModalBtn");
   const leadCollectionForm = document.getElementById("leadCollectionForm");
@@ -651,7 +666,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (commentListContainer) {
           // Chèn vào cuối danh sách bình luận hiện tại
-          commentListContainer.insertAdjacentHTML("beforeend", moreCommentsHTML);
+          commentListContainer.insertAdjacentHTML(
+            "beforeend",
+            moreCommentsHTML
+          );
         }
 
         isCommentsLoaded = true;
@@ -665,7 +683,9 @@ document.addEventListener("DOMContentLoaded", () => {
           leadCollectionModal.classList.remove("opacity-0");
           document.body.style.overflow = "hidden";
 
-          const modalContent = document.getElementById("leadCollectionModalContent");
+          const modalContent = document.getElementById(
+            "leadCollectionModalContent"
+          );
           if (modalContent) {
             modalContent.classList.remove("scale-95");
             modalContent.classList.add("scale-100");
@@ -679,7 +699,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeLeadModal = () => {
     if (leadCollectionModal) {
       leadCollectionModal.classList.add("opacity-0");
-      const modalContent = document.getElementById("leadCollectionModalContent");
+      const modalContent = document.getElementById(
+        "leadCollectionModalContent"
+      );
       if (modalContent) {
         modalContent.classList.remove("scale-100");
         modalContent.classList.add("scale-95");
@@ -721,7 +743,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       if (!phone || !isValidPhone(phone)) {
-        Toast.fire({ icon: "error", title: "Vui lòng nhập số điện thoại hợp lệ (10 số)." });
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng nhập số điện thoại hợp lệ (10 số).",
+        });
         return;
       }
       if (!reason) {
@@ -734,113 +759,115 @@ document.addEventListener("DOMContentLoaded", () => {
       Swal.fire({
         icon: "success",
         title: "Đã gửi thông tin",
-        text: "Cảm ơn bạn! Chúng tôi đã nhận được thông tin và sẽ liên hệ sớm nhất."
+        text: "Cảm ơn bạn! Chúng tôi đã nhận được thông tin và sẽ liên hệ sớm nhất.",
       });
       closeLeadModal();
 
       // Ẩn nút xem thêm bình luận sau khi gửi form thành công
       if (loadMoreCommentsContainer) {
-        loadMoreCommentsContainer.style.display = 'none';
+        loadMoreCommentsContainer.style.display = "none";
       } else if (loadMoreCommentsBtn) {
-        loadMoreCommentsBtn.style.display = 'none';
+        loadMoreCommentsBtn.style.display = "none";
       }
     });
   }
 
   // Order Form Submit Logic
   const orderForm = document.getElementById("orderForm");
-const submitOrderBtn = document.getElementById("submitOrderBtn");
-const hiddenIframe = document.getElementById("hidden_iframe");
+  const submitOrderBtn = document.getElementById("submitOrderBtn");
+  const hiddenIframe = document.getElementById("hidden_iframe");
 
-let isSubmittingOrder = false;
+  let isSubmittingOrder = false;
 
-if (orderForm) {
-  function getUTMParam(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name) || "";
-  }
-
-  function setTrackingFields() {
-    document.getElementById("pageUrl").value = window.location.href;
-    document.getElementById("userAgent").value = navigator.userAgent;
-
-    document.getElementById("utm_source").value = getUTMParam("utm_source");
-    document.getElementById("utm_medium").value = getUTMParam("utm_medium");
-    document.getElementById("utm_campaign").value = getUTMParam("utm_campaign");
-    document.getElementById("utm_content").value = getUTMParam("utm_content");
-    document.getElementById("utm_term").value = getUTMParam("utm_term");
-  }
-
-  setTrackingFields();
-
-  orderForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const product = document.getElementById("orderProduct").value;
-    const name = document.getElementById("orderName").value.trim();
-    const phone = document.getElementById("orderPhone").value.trim();
-    const address = document.getElementById("orderAddress").value.trim();
-    const vat = document.getElementById("vat").checked;
-
-    if (!name) {
-      Toast.fire({
-        icon: "error",
-        title: "Vui lòng nhập họ tên người nhận."
-      });
-      return;
+  if (orderForm) {
+    function getUTMParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name) || "";
     }
 
-    if (!phone || !isValidPhone(phone)) {
-      Toast.fire({
-        icon: "error",
-        title: "Vui lòng nhập số điện thoại hợp lệ."
-      });
-      return;
+    function setTrackingFields() {
+      document.getElementById("pageUrl").value = window.location.href;
+      document.getElementById("userAgent").value = navigator.userAgent;
+
+      document.getElementById("utm_source").value = getUTMParam("utm_source");
+      document.getElementById("utm_medium").value = getUTMParam("utm_medium");
+      document.getElementById("utm_campaign").value =
+        getUTMParam("utm_campaign");
+      document.getElementById("utm_content").value = getUTMParam("utm_content");
+      document.getElementById("utm_term").value = getUTMParam("utm_term");
     }
 
-    if (!address) {
-      Toast.fire({
-        icon: "error",
-        title: "Vui lòng nhập địa chỉ giao hàng."
-      });
-      return;
-    }
-
-    console.log("Đang gửi đơn hàng lên Apps Script:", {
-      product,
-      name,
-      phone,
-      address,
-      vat
-    });
-
-    submitOrderBtn.disabled = true;
-    submitOrderBtn.innerText = "ĐANG GỬI...";
-
-    isSubmittingOrder = true;
-
-    // Dòng này mới thực sự submit form lên Apps Script
-    orderForm.submit();
-  });
-
-  hiddenIframe.addEventListener("load", function () {
-    if (!isSubmittingOrder) return;
-
-    isSubmittingOrder = false;
-
-    Swal.fire({
-      icon: "success",
-      title: "Đặt hàng thành công!",
-      text: "Đội ngũ Atlantis sẽ sớm liên hệ để xác nhận đơn hàng."
-    });
-
-    orderForm.reset();
     setTrackingFields();
 
-    submitOrderBtn.disabled = false;
-    submitOrderBtn.innerText = "HOÀN TẤT ĐẶT HÀNG";
-  });
-}});
+    orderForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const product = document.getElementById("orderProduct").value;
+      const name = document.getElementById("orderName").value.trim();
+      const phone = document.getElementById("orderPhone").value.trim();
+      const address = document.getElementById("orderAddress").value.trim();
+      const vat = document.getElementById("vat").checked;
+
+      if (!name) {
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng nhập họ tên người nhận.",
+        });
+        return;
+      }
+
+      if (!phone || !isValidPhone(phone)) {
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng nhập số điện thoại hợp lệ.",
+        });
+        return;
+      }
+
+      if (!address) {
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng nhập địa chỉ giao hàng.",
+        });
+        return;
+      }
+
+      console.log("Đang gửi đơn hàng lên Apps Script:", {
+        product,
+        name,
+        phone,
+        address,
+        vat,
+      });
+
+      submitOrderBtn.disabled = true;
+      submitOrderBtn.innerText = "ĐANG GỬI...";
+
+      isSubmittingOrder = true;
+
+      // Dòng này mới thực sự submit form lên Apps Script
+      orderForm.submit();
+    });
+
+    hiddenIframe.addEventListener("load", function () {
+      if (!isSubmittingOrder) return;
+
+      isSubmittingOrder = false;
+
+      Swal.fire({
+        icon: "success",
+        title: "Đặt hàng thành công!",
+        text: "Đội ngũ Atlantis sẽ sớm liên hệ để xác nhận đơn hàng.",
+      });
+
+      orderForm.reset();
+      setTrackingFields();
+
+      submitOrderBtn.disabled = false;
+      submitOrderBtn.innerText = "HOÀN TẤT ĐẶT HÀNG";
+    });
+  }
+});
 
 // ==========================================
 // MÔ PHỎNG DỮ LIỆU TỪ API & RENDER ĐỘNG
@@ -852,30 +879,30 @@ const mockApiProductData = {
   reviewsCount: 128,
   soldCount: "2.466",
   features: [
-    "Công suất: 2500W",
+    "Công suất: trụng bún 3kw, trụng bát 1kw",
     "Dung tích: Phù hợp quán ăn vừa và nhỏ",
-    "Chất liệu: Inox cao cấp chống ăn mòn"
+    "Chất liệu: Inox cao cấp chống ăn mòn",
   ],
   materials: [
     {
-      id: "204",
-      name: "Inox 204",
+      id: "201",
+      name: "Inox 201",
       desc: "Tiêu chuẩn",
       price: 4800000,
       originalPrice: 6720000,
       discount: 40,
-      isHot: false
+      isHot: false,
     },
     {
       id: "304",
       name: "Inox 304",
-      desc: "Cao cấp siêu bền",
+      desc: "Tốt nhất được lựa chọn nhiều nhất",
       price: 5500000,
       originalPrice: 7150000,
       discount: 30,
-      isHot: true
-    }
-  ]
+      isHot: true,
+    },
+  ],
 };
 
 // Cập nhật lại hàm updatePrice để lấy dữ liệu từ API thay vì hardcode
@@ -885,12 +912,20 @@ window.updatePrice = (materialId) => {
   const discountBadge = document.getElementById("discountBadge");
   const mainDiscountBadge = document.getElementById("mainDiscountBadge");
 
-  const selectedMaterial = mockApiProductData.materials.find(m => m.id === materialId);
+  const selectedMaterial = mockApiProductData.materials.find(
+    (m) => m.id === materialId
+  );
   if (selectedMaterial) {
-    if (currentPrice) currentPrice.innerText = selectedMaterial.price.toLocaleString('vi-VN') + "₫";
-    if (originalPrice) originalPrice.innerText = selectedMaterial.originalPrice.toLocaleString('vi-VN') + "₫";
-    if (discountBadge) discountBadge.innerText = "-" + selectedMaterial.discount + "%";
-    if (mainDiscountBadge) mainDiscountBadge.innerText = "-" + selectedMaterial.discount + "%";
+    if (currentPrice)
+      currentPrice.innerText =
+        selectedMaterial.price.toLocaleString("vi-VN") + "₫";
+    if (originalPrice)
+      originalPrice.innerText =
+        selectedMaterial.originalPrice.toLocaleString("vi-VN") + "₫";
+    if (discountBadge)
+      discountBadge.innerText = "-" + selectedMaterial.discount + "%";
+    if (mainDiscountBadge)
+      mainDiscountBadge.innerText = "-" + selectedMaterial.discount + "%";
   }
 };
 
@@ -909,7 +944,9 @@ window.renderProductFromAPI = (data) => {
 
         <!-- Main Image -->
         <div class="relative w-full h-64 md:h-80 flex justify-center items-center group cursor-pointer" onclick="openLightbox()">
-          <img id="mainProductImage" src="./img/trungbun2rovabat.png" alt="${data.name}" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+          <img id="mainProductImage" src="./img/trungbun2rovabat.png" alt="${
+            data.name
+          }" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
           <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
             <div class="bg-white/80 w-12 h-12 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm">
               <i class="ph-bold ph-magnifying-glass-plus text-2xl text-primary"></i>
@@ -924,49 +961,79 @@ window.renderProductFromAPI = (data) => {
       </div>
       
       <div class="p-4 md:p-8 md:w-1/2 flex flex-col justify-center">
-        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">${data.name}</h3>
+        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">${
+          data.name
+        }</h3>
         
         <div class="flex items-center gap-1.5 md:gap-3 mb-4 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">
           <div class="flex text-yellow-400">
             <i class="ph-fill ph-star"></i>
           </div>
           <div class="text-gray-500 border-l border-gray-300 pl-1.5 md:pl-3">
-            <span class="font-medium text-gray-900">${data.rating}/5</span> (${data.reviewsCount} đánh giá)
+            <span class="font-medium text-gray-900">${data.rating}/5</span> (${
+    data.reviewsCount
+  } đánh giá)
           </div>
           <i class="ph-bold ph-shopping-cart text-sm md:text-xl ml-0.5 md:ml-0"></i>
           <div class="text-gray-500 border-l border-gray-300 pl-1.5 md:pl-3">
-            Đã bán <span class="font-medium text-gray-900">${data.soldCount}</span>
+            Đã bán <span class="font-medium text-gray-900">${
+              data.soldCount
+            }</span>
           </div>
         </div>
 
         <div class="flex gap-1.5 md:gap-3 mb-6 items-end whitespace-nowrap">
-          <span id="currentPrice" class="text-2xl md:text-3xl font-bold text-accent leading-none">${defaultMaterial.price.toLocaleString('vi-VN')}₫</span>
-          <span id="originalPrice" class="text-gray-400 line-through text-sm md:text-lg mb-0.5 md:mb-1 leading-none">${defaultMaterial.originalPrice.toLocaleString('vi-VN')}₫</span>
-          <span id="discountBadge" class="bg-red-100 text-red-600 text-[10px] md:text-xs font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded mb-0.5 md:mb-2 leading-none">-${defaultMaterial.discount}%</span>
+          <span id="currentPrice" class="text-2xl md:text-3xl font-bold text-accent leading-none">${defaultMaterial.price.toLocaleString(
+            "vi-VN"
+          )}₫</span>
+          <span id="originalPrice" class="text-gray-400 line-through text-sm md:text-lg mb-0.5 md:mb-1 leading-none">${defaultMaterial.originalPrice.toLocaleString(
+            "vi-VN"
+          )}₫</span>
+          <span id="discountBadge" class="bg-red-100 text-red-600 text-[10px] md:text-xs font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded mb-0.5 md:mb-2 leading-none">-${
+            defaultMaterial.discount
+          }%</span>
         </div>
 
         <div class="mb-6">
           <h4 class="text-sm font-semibold text-gray-900 mb-3">Chọn chất liệu:</h4>
           <div class="flex gap-3">
-            ${data.materials.map((mat, index) => `
+            ${data.materials
+              .map(
+                (mat, index) => `
               <label class="cursor-pointer relative flex-1">
-                <input type="radio" name="material" value="${mat.id}" class="peer sr-only" ${index === 0 ? 'checked' : ''} onchange="updatePrice('${mat.id}')">
+                <input type="radio" name="material" value="${
+                  mat.id
+                }" class="peer sr-only" ${
+                  index === 0 ? "checked" : ""
+                } onchange="updatePrice('${mat.id}')">
                 <div class="px-3 py-2 border-2 border-gray-200 rounded-lg peer-checked:border-primary peer-checked:bg-blue-50 hover:border-primary/50 transition-all text-center h-full flex flex-col justify-center">
-                  <div class="font-bold text-gray-900 peer-checked:text-primary">${mat.name}</div>
+                  <div class="font-bold text-gray-900 peer-checked:text-primary">${
+                    mat.name
+                  }</div>
                   <div class="text-xs text-gray-500">${mat.desc}</div>
                 </div>
-                ${mat.isHot ? '<div class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm border border-white">HOT</div>' : ''}
+                ${
+                  mat.isHot
+                    ? '<div class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm border border-white">HOT</div>'
+                    : ""
+                }
               </label>
-            `).join('')}
+            `
+              )
+              .join("")}
           </div>
         </div>
 
         <div class="mb-8 space-y-3 text-base text-gray-600 flex-1">
-          ${data.features.map(f => `
+          ${data.features
+            .map(
+              (f) => `
             <p class="flex items-center gap-2">
               <i class="ph-fill ph-check-circle text-green-500"></i> ${f}
             </p>
-          `).join('')}
+          `
+            )
+            .join("")}
         </div>
         
         <div class="grid grid-cols-2 gap-4 mt-auto">
@@ -996,5 +1063,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 800);
 });
-
-
