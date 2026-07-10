@@ -67,7 +67,7 @@
       <!-- Call Button -->
       <a href="tel:0329585872"
         class="bg-primary text-white px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">
-        <i class="ph-fill ph-phone-call text-xl"></i> Gọi điện
+        <i class="ph-fill ph-phone-call text-xl"></i> Tư vấn miễn phí
       </a>
     </div>
   </header>
@@ -423,7 +423,6 @@
       </div>
     </div>
   </section>
-
 
   <!-- Promotional Pricing Section -->
   <section id="banggia" class="py-16 bg-gray-50">
@@ -952,46 +951,64 @@
           <h4 class="text-xl font-bold text-gray-800 mb-6">
             Thông Tin Đặt Hàng
           </h4>
-          <form class="space-y-4">
+          <form id="orderForm"
+            action="https://script.google.com/macros/s/AKfycbzVEejOvdOcH5qTkBJYRlfVD4hew0U3YlFOtRHOYiai_RGGKBtNWWEgdzSs6utLFWIx/exec"
+            target="hidden_iframe" method="post" class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Chọn sản phẩm <span
                   class="text-red-500">*</span></label>
-              <select
+              <select id="orderProduct" required name="orderProduct"
                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
-                <option>Bếp Trụng Đa Năng-Inox 304 - 5.500.000₫</option>
-                <option>Bếp Trụng Đa Năng-Inox 201 - 4.800.000₫</option>
+                <option value="Bếp Trụng Đa Năng-Inox 304">
+                  Bếp Trụng Đa Năng-Inox 304 - 5.500.000₫
+                </option>
+                <option value="Bếp Trụng Đa Năng-Inox 201">
+                  Bếp Trụng Đa Năng-Inox 201 - 4.800.000₫
+                </option>
               </select>
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Họ và tên <span
                   class="text-red-500">*</span></label>
-              <input type="text" placeholder="Nhập họ tên của bạn"
+              <input type="text" required name="orderName" id="orderName" placeholder="Nhập họ tên của bạn"
                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" />
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại <span
                   class="text-red-500">*</span></label>
-              <input type="tel" placeholder="Nhập số điện thoại"
+              <input type="tel" required name="orderPhone" id="orderPhone" placeholder="Nhập số điện thoại"
                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" />
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ giao hàng <span
                   class="text-red-500">*</span></label>
-              <textarea rows="3" placeholder="Nhập địa chỉ chi tiết"
+              <textarea id="orderAddress" required name="orderAddress" rows="3" placeholder="Nhập địa chỉ chi tiết"
                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
             </div>
 
             <div class="flex items-center gap-2 mt-2">
-              <input type="checkbox" id="vat"
-                class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2" />
+              <input type="checkbox" id="vat" name="vat"
+                class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2"
+                value="true" />
               <label for="vat" class="text-sm text-gray-700">Tôi muốn xuất hóa đơn VAT</label>
             </div>
+            <input type="text" name="company" style="display: none" tabindex="-1" autocomplete="off" />
+
+            <!-- Các field ẩn để tracking -->
+            <input type="hidden" name="pageUrl" id="pageUrl" />
+            <input type="hidden" name="userAgent" id="userAgent" />
+
+            <input type="hidden" name="utm_source" id="utm_source" />
+            <input type="hidden" name="utm_medium" id="utm_medium" />
+            <input type="hidden" name="utm_campaign" id="utm_campaign" />
+            <input type="hidden" name="utm_content" id="utm_content" />
+            <input type="hidden" name="utm_term" id="utm_term" />
 
             <div class="flex flex-col sm:flex-row gap-4 mt-6">
-              <button type="button"
+              <button type="submit" id="submitOrderBtn"
                 class="w-full sm:w-3/5 bg-accent text-white font-bold text-lg py-4 rounded-lg hover:bg-red-700 transition-colors shadow-lg">
                 HOÀN TẤT ĐẶT HÀNG
               </button>
@@ -1001,6 +1018,7 @@
               </a>
             </div>
           </form>
+          <iframe name="hidden_iframe" id="hidden_iframe" style="display: none"></iframe>
         </div>
       </div>
     </div>
@@ -1066,52 +1084,29 @@
   </footer>
 
   <!-- Chat Button & Box -->
-  <button id="chatToggleBtn" title="Chat tư vấn"
-    class="fixed bottom-[88px] right-8 bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 z-50 focus:outline-none">
-    <i class="ph-bold ph-chat-teardrop-dots text-2xl animate-pulse"></i>
+  <button id="chatToggleBtn" title="Liên hệ"
+    class="fixed bottom-[88px] right-8 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 z-50 focus:outline-none">
+    <i class="ph-bold ph-chat-teardrop-dots text-3xl animate-pulse"></i>
   </button>
-
   <div id="chatBoxContainer"
-    class="fixed bottom-[144px] right-8 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden opacity-0 translate-y-10 invisible transition-all duration-300 flex flex-col origin-bottom-right">
-    <!-- Chat Header -->
-    <div class="bg-primary text-white p-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center relative">
-          <i class="ph-fill ph-robot text-xl"></i>
-          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 border-2 border-primary rounded-full"></span>
-        </div>
-        <div>
-          <h4 class="font-bold text-sm">Atlantis Support</h4>
-          <p class="text-[10px] opacity-80">Trực tuyến</p>
-        </div>
-      </div>
-      <button id="closeChatBtn" class="text-white hover:text-gray-200 transition-colors focus:outline-none">
-        <i class="ph-bold ph-x text-lg"></i>
-      </button>
-    </div>
+    class="fixed bottom-[155px] right-8 w-14 z-50 flex flex-col gap-3 items-center opacity-0 translate-y-10 invisible transition-all duration-300 origin-bottom">
+    <!-- Zalo Button -->
+    <a href="https://zalo.me/0329585872" target="_blank" rel="noopener noreferrer" title="Chat Zalo"
+      class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100 hover:-translate-y-1 hover:shadow-xl transition-all group relative">
+      <span class="text-[#0068FF] font-black text-sm group-hover:scale-110 transition-transform">Zalo</span>
+      <span
+        class="absolute right-full mr-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity">Chat
+        Zalo</span>
+    </a>
 
-    <!-- Chat Messages -->
-    <div id="chatMessages" class="h-72 p-4 overflow-y-auto bg-gray-50 flex flex-col gap-3">
-      <div class="flex gap-2 max-w-[85%]">
-        <div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center shrink-0 mt-1">
-          <i class="ph-fill ph-robot text-white text-[10px]"></i>
-        </div>
-        <div
-          class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100 leading-relaxed">
-          Bạn muốn tư vấn sản phẩm gì ạ? 👋
-        </div>
-      </div>
-    </div>
-
-    <!-- Chat Input -->
-    <div class="p-3 bg-white border-t border-gray-100 flex items-center gap-2">
-      <input id="chatInput" type="text" placeholder="Nhập tin nhắn..."
-        class="flex-1 border border-gray-200 focus:outline-none focus:border-primary text-sm bg-gray-50 rounded-full px-4 py-2 transition-colors" />
-      <button id="sendChatBtn"
-        class="w-9 h-9 bg-primary text-white rounded-full flex items-center justify-center hover:bg-blue-700 shrink-0 transition-colors focus:outline-none">
-        <i class="ph-fill ph-paper-plane-tilt"></i>
-      </button>
-    </div>
+    <!-- Hotline Button -->
+    <a href="tel:0329585872" title="Gọi Hotline"
+      class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100 hover:-translate-y-1 hover:shadow-xl transition-all group relative">
+      <i class="ph-fill ph-phone-call text-red-500 text-2xl group-hover:scale-110 transition-transform"></i>
+      <span
+        class="absolute right-full mr-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity">Gọi
+        Hotline</span>
+    </a>
   </div>
 
   <!-- Scroll To Top Button -->
@@ -1161,7 +1156,6 @@
     <div
       class="bg-white w-full h-full md:h-auto md:max-w-md md:rounded-2xl shadow-2xl flex flex-col relative overflow-hidden transform scale-95 transition-transform duration-300"
       id="leadCollectionModalContent">
-
       <!-- Header -->
       <div class="bg-primary px-6 py-4 flex justify-between items-center text-white shrink-0">
         <h3 class="font-bold text-lg">Để lại thông tin nhận tư vấn</h3>
@@ -1173,7 +1167,8 @@
       <!-- Form Body -->
       <div class="p-6 overflow-y-auto flex-1">
         <p class="text-gray-600 text-sm mb-5">
-          Vui lòng để lại thông tin, đội ngũ Atlantis sẽ liên hệ và hỗ trợ anh/chị nhanh nhất.
+          Vui lòng để lại thông tin, đội ngũ Atlantis sẽ liên hệ và hỗ trợ
+          anh/chị nhanh nhất.
         </p>
 
         <form id="leadCollectionForm" class="space-y-4">
@@ -1181,14 +1176,14 @@
             <label class="block text-sm font-semibold text-gray-700 mb-1">Họ tên *</label>
             <input type="text" id="leadName" required
               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors"
-              placeholder="Nhập họ tên của bạn">
+              placeholder="Nhập họ tên của bạn" />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Số điện thoại *</label>
             <input type="tel" id="leadPhone" required
               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors"
-              placeholder="Nhập số điện thoại">
+              placeholder="Nhập số điện thoại" />
           </div>
 
           <div>
@@ -1199,7 +1194,9 @@
               <option value="Tư vấn sản phẩm">Tư vấn sản phẩm</option>
               <option value="Quan tâm sản phẩm">Quan tâm sản phẩm</option>
               <option value="Chi tiết sản phẩm">Chi tiết sản phẩm</option>
-              <option value="Mua số lượng nhiều có ưu đãi gì không">Mua số lượng nhiều có ưu đãi gì không</option>
+              <option value="Mua số lượng nhiều có ưu đãi gì không">
+                Mua số lượng nhiều có ưu đãi gì không
+              </option>
             </select>
           </div>
 
@@ -1220,6 +1217,7 @@
   </div>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     AOS.init({
       duration: 800,

@@ -39,17 +39,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const secondsEls = document.querySelectorAll("[data-timer='seconds']");
 
   if (hoursEls.length > 0 && minutesEls.length > 0 && secondsEls.length > 0) {
-    // Determine initial duration from the first timer element if not already saved
-    let countdownEndTime = localStorage.getItem('atlantisCountdownEndTime');
+    const initialHours = parseInt(hoursEls[0].innerText, 10) || 0;
+    const initialMinutes = parseInt(minutesEls[0].innerText, 10) || 0;
+    const initialSeconds = parseInt(secondsEls[0].innerText, 10) || 0;
+    const totalInitialSeconds = initialHours * 3600 + initialMinutes * 60 + initialSeconds;
+
+    // Dùng sessionStorage: Giữ thời gian khi F5 tải lại, nhưng sẽ bị reset khi đóng tab hoặc thoát trang
+    let countdownEndTime = sessionStorage.getItem('atlantisCountdownEndTime');
 
     if (!countdownEndTime) {
-      const initialHours = parseInt(hoursEls[0].innerText, 10) || 0;
-      const initialMinutes = parseInt(minutesEls[0].innerText, 10) || 0;
-      const initialSeconds = parseInt(secondsEls[0].innerText, 10) || 0;
-      const totalInitialSeconds = initialHours * 3600 + initialMinutes * 60 + initialSeconds;
-
       countdownEndTime = Date.now() + totalInitialSeconds * 1000;
-      localStorage.setItem('atlantisCountdownEndTime', countdownEndTime);
+      sessionStorage.setItem('atlantisCountdownEndTime', countdownEndTime);
     } else {
       countdownEndTime = parseInt(countdownEndTime, 10);
     }
@@ -59,9 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
       let remainingSeconds = Math.floor((countdownEndTime - now) / 1000);
 
       if (remainingSeconds <= 0) {
-        remainingSeconds = 0;
-        // Optional: clear localStorage if you want it to restart on next visit after expiring
-        // localStorage.removeItem('atlantisCountdownEndTime');
+        // Cơ chế hết thời gian tự động chạy lại tiếp
+        countdownEndTime = Date.now() + totalInitialSeconds * 1000;
+        sessionStorage.setItem('atlantisCountdownEndTime', countdownEndTime);
+        remainingSeconds = totalInitialSeconds;
       }
 
       const h = Math.floor(remainingSeconds / 3600);
@@ -98,9 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Chat box functionality
   const chatToggleBtn = document.getElementById("chatToggleBtn");
   const chatBoxContainer = document.getElementById("chatBoxContainer");
-  const closeChatBtn = document.getElementById("closeChatBtn");
 
-  if (chatToggleBtn && chatBoxContainer && closeChatBtn) {
+  if (chatToggleBtn && chatBoxContainer) {
     function openChat() {
       chatBoxContainer.classList.remove(
         "opacity-0",
@@ -108,9 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "invisible"
       );
       chatBoxContainer.classList.add("opacity-100", "translate-y-0", "visible");
-      chatToggleBtn.innerHTML = '<i class="ph-bold ph-x text-2xl"></i>';
+      chatToggleBtn.innerHTML = '<i class="ph-bold ph-x text-3xl"></i>';
       chatToggleBtn.classList.remove("bg-green-500", "hover:bg-green-600");
-      chatToggleBtn.classList.add("bg-gray-600", "hover:bg-gray-700");
+      chatToggleBtn.classList.add("bg-red-500", "hover:bg-red-600");
     }
 
     function closeChat() {
@@ -125,14 +125,14 @@ document.addEventListener("DOMContentLoaded", () => {
         "visible"
       );
       chatToggleBtn.innerHTML =
-        '<i class="ph-bold ph-chat-teardrop-dots text-2xl animate-pulse"></i>';
-      chatToggleBtn.classList.remove("bg-gray-600", "hover:bg-gray-700");
+        '<i class="ph-bold ph-chat-teardrop-dots text-3xl animate-pulse"></i>';
+      chatToggleBtn.classList.remove("bg-red-500", "hover:bg-red-600");
       chatToggleBtn.classList.add("bg-green-500", "hover:bg-green-600");
     }
 
     // Toggle chat window
     chatToggleBtn.addEventListener("click", (event) => {
-      event.stopPropagation(); // Cực kỳ quan trọng: Ngăn không cho sự kiện click lan ra document
+      event.stopPropagation(); // Ngăn không cho sự kiện click lan ra document
       const isVisible = chatBoxContainer.classList.contains("visible");
 
       if (isVisible) {
@@ -140,12 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         openChat();
       }
-    });
-
-    // Close chat window via close button inside chat header
-    closeChatBtn.addEventListener("click", (event) => {
-      event.stopPropagation();
-      closeChat();
     });
 
     // Close chat window when clicking outside
@@ -159,77 +153,77 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Chat Messaging Logic
-    const chatInput = document.getElementById("chatInput");
-    const sendChatBtn = document.getElementById("sendChatBtn");
-    const chatMessages = document.getElementById("chatMessages");
+    // const chatInput = document.getElementById("chatInput");
+    // const sendChatBtn = document.getElementById("sendChatBtn");
+    // const chatMessages = document.getElementById("chatMessages");
 
-    if (chatInput && sendChatBtn && chatMessages) {
-      function sendMessage() {
-        const messageText = chatInput.value.trim();
-        if (!messageText) return;
+    // if (chatInput && sendChatBtn && chatMessages) {
+    //   function sendMessage() {
+    //     const messageText = chatInput.value.trim();
+    //     if (!messageText) return;
 
-        // Add user message to UI
-        const userMessageHTML = `
-                    <div class="flex gap-2 max-w-[85%] self-end flex-row-reverse">
-                        <div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-sm border border-blue-600 leading-relaxed">
-                            ${messageText}
-                        </div>
-                    </div>
-                `;
-        chatMessages.insertAdjacentHTML("beforeend", userMessageHTML);
-        chatInput.value = "";
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    //     // Add user message to UI
+    //     const userMessageHTML = `
+    //                 <div class="flex gap-2 max-w-[85%] self-end flex-row-reverse">
+    //                     <div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-sm border border-blue-600 leading-relaxed">
+    //                         ${messageText}
+    //                     </div>
+    //                 </div>
+    //             `;
+    //     chatMessages.insertAdjacentHTML("beforeend", userMessageHTML);
+    //     chatInput.value = "";
+    //     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Simulate bot typing indicator
-        setTimeout(() => {
-          const botTypingId = "typing-" + Date.now();
-          const botTypingHTML = `
-                        <div id="${botTypingId}" class="flex gap-2 max-w-[85%]">
-                            <div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center shrink-0 mt-1">
-                                <i class="ph-fill ph-robot text-white text-[10px]"></i>
-                            </div>
-                            <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100 flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
-                            </div>
-                        </div>
-                    `;
-          chatMessages.insertAdjacentHTML("beforeend", botTypingHTML);
-          chatMessages.scrollTop = chatMessages.scrollHeight;
+    //     // Simulate bot typing indicator
+    //     setTimeout(() => {
+    //       const botTypingId = "typing-" + Date.now();
+    //       const botTypingHTML = `
+    //                     <div id="${botTypingId}" class="flex gap-2 max-w-[85%]">
+    //                         <div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center shrink-0 mt-1">
+    //                             <i class="ph-fill ph-robot text-white text-[10px]"></i>
+    //                         </div>
+    //                         <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100 flex items-center gap-1">
+    //                             <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
+    //                             <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+    //                             <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
+    //                         </div>
+    //                     </div>
+    //                 `;
+    //       chatMessages.insertAdjacentHTML("beforeend", botTypingHTML);
+    //       chatMessages.scrollTop = chatMessages.scrollHeight;
 
-          // Simulate bot response after typing
-          setTimeout(() => {
-            const typingIndicator = document.getElementById(botTypingId);
-            if (typingIndicator) typingIndicator.remove();
+    //       // Simulate bot response after typing
+    //       setTimeout(() => {
+    //         const typingIndicator = document.getElementById(botTypingId);
+    //         if (typingIndicator) typingIndicator.remove();
 
-            const botResponseHTML = `
-                            <div class="flex gap-2 max-w-[85%]">
-                                <div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center shrink-0 mt-1">
-                                    <i class="ph-fill ph-robot text-white text-[10px]"></i>
-                                </div>
-                                <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100 leading-relaxed">
-                                    Dạ vâng, hệ thống đã ghi nhận. Tư vấn viên của Atlantis sẽ liên hệ hỗ trợ anh/chị ngay nhé! Anh/chị cần hỗ trợ gấp vui lòng gọi Hotline: 0329.585.872 ạ.
-                                </div>
-                            </div>
-                        `;
-            chatMessages.insertAdjacentHTML("beforeend", botResponseHTML);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-          }, 1500);
-        }, 500);
-      }
+    //         const botResponseHTML = `
+    //                         <div class="flex gap-2 max-w-[85%]">
+    //                             <div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center shrink-0 mt-1">
+    //                                 <i class="ph-fill ph-robot text-white text-[10px]"></i>
+    //                             </div>
+    //                             <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100 leading-relaxed">
+    //                                 Dạ vâng, hệ thống đã ghi nhận. Tư vấn viên của Atlantis sẽ liên hệ hỗ trợ anh/chị ngay nhé! Anh/chị cần hỗ trợ gấp vui lòng gọi Hotline: 0329.585.872 ạ.
+    //                             </div>
+    //                         </div>
+    //                     `;
+    //         chatMessages.insertAdjacentHTML("beforeend", botResponseHTML);
+    //         chatMessages.scrollTop = chatMessages.scrollHeight;
+    //       }, 1500);
+    //     }, 500);
+    //   }
 
-      // Send when clicking the button
-      sendChatBtn.addEventListener("click", sendMessage);
+    //   // Send when clicking the button
+    //   sendChatBtn.addEventListener("click", sendMessage);
 
-      // Send when pressing Enter key
-      chatInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          sendMessage();
-        }
-      });
-    }
+    //   // Send when pressing Enter key
+    //   chatInput.addEventListener("keydown", (event) => {
+    //     if (event.key === "Enter") {
+    //       event.preventDefault();
+    //       sendMessage();
+    //     }
+    //   });
+    // }
   }
 
   // Product Gallery & Lightbox
@@ -467,6 +461,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Helper
+  const isValidPhone = (phone) => /^(0|\+84)(3|5|7|8|9)[0-9]{8}$/.test(phone.replace(/\s+/g, ''));
+
+  // SweetAlert2 Toast Setup
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
+
   // Comment Submission Logic
   const submitCommentBtn = document.getElementById("submitCommentBtn");
   const commentText = document.getElementById("commentText");
@@ -481,15 +491,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const phone = commentPhone.value.trim();
 
       if (!text) {
-        alert("Vui lòng nhập nội dung bình luận.");
+        Toast.fire({ icon: "error", title: "Vui lòng nhập nội dung bình luận." });
         return;
       }
       if (!name) {
-        alert("Vui lòng nhập họ tên.");
+        Toast.fire({ icon: "error", title: "Vui lòng nhập họ tên." });
         return;
       }
-      if (!phone) {
-        alert("Vui lòng nhập số điện thoại.");
+      if (!phone || !isValidPhone(phone)) {
+        Toast.fire({ icon: "error", title: "Vui lòng nhập số điện thoại hợp lệ (10 số)." });
         return;
       }
 
@@ -539,7 +549,11 @@ document.addEventListener("DOMContentLoaded", () => {
       commentText.value = "";
       commentName.value = "";
       commentPhone.value = "";
-      alert("Cảm ơn bạn! Bình luận của bạn đã được gửi thành công.");
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: "Bình luận của bạn đã được gửi thành công."
+      });
     });
   }
 
@@ -697,14 +711,31 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
 
       // Thu thập dữ liệu
-      const name = document.getElementById("leadName").value;
-      const phone = document.getElementById("leadPhone").value;
+      const name = document.getElementById("leadName").value.trim();
+      const phone = document.getElementById("leadPhone").value.trim();
       const reason = document.getElementById("leadReason").value;
-      const notes = document.getElementById("leadNotes").value;
+      const notes = document.getElementById("leadNotes").value.trim();
+
+      if (!name) {
+        Toast.fire({ icon: "error", title: "Vui lòng nhập họ tên." });
+        return;
+      }
+      if (!phone || !isValidPhone(phone)) {
+        Toast.fire({ icon: "error", title: "Vui lòng nhập số điện thoại hợp lệ (10 số)." });
+        return;
+      }
+      if (!reason) {
+        Toast.fire({ icon: "error", title: "Vui lòng chọn lý do." });
+        return;
+      }
 
       console.log("Lead Data:", { name, phone, reason, notes });
 
-      alert("Cảm ơn bạn! Chúng tôi đã nhận được thông tin và sẽ liên hệ sớm nhất.");
+      Swal.fire({
+        icon: "success",
+        title: "Đã gửi thông tin",
+        text: "Cảm ơn bạn! Chúng tôi đã nhận được thông tin và sẽ liên hệ sớm nhất."
+      });
       closeLeadModal();
 
       // Ẩn nút xem thêm bình luận sau khi gửi form thành công
@@ -715,7 +746,101 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-});
+
+  // Order Form Submit Logic
+  const orderForm = document.getElementById("orderForm");
+const submitOrderBtn = document.getElementById("submitOrderBtn");
+const hiddenIframe = document.getElementById("hidden_iframe");
+
+let isSubmittingOrder = false;
+
+if (orderForm) {
+  function getUTMParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name) || "";
+  }
+
+  function setTrackingFields() {
+    document.getElementById("pageUrl").value = window.location.href;
+    document.getElementById("userAgent").value = navigator.userAgent;
+
+    document.getElementById("utm_source").value = getUTMParam("utm_source");
+    document.getElementById("utm_medium").value = getUTMParam("utm_medium");
+    document.getElementById("utm_campaign").value = getUTMParam("utm_campaign");
+    document.getElementById("utm_content").value = getUTMParam("utm_content");
+    document.getElementById("utm_term").value = getUTMParam("utm_term");
+  }
+
+  setTrackingFields();
+
+  orderForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const product = document.getElementById("orderProduct").value;
+    const name = document.getElementById("orderName").value.trim();
+    const phone = document.getElementById("orderPhone").value.trim();
+    const address = document.getElementById("orderAddress").value.trim();
+    const vat = document.getElementById("vat").checked;
+
+    if (!name) {
+      Toast.fire({
+        icon: "error",
+        title: "Vui lòng nhập họ tên người nhận."
+      });
+      return;
+    }
+
+    if (!phone || !isValidPhone(phone)) {
+      Toast.fire({
+        icon: "error",
+        title: "Vui lòng nhập số điện thoại hợp lệ."
+      });
+      return;
+    }
+
+    if (!address) {
+      Toast.fire({
+        icon: "error",
+        title: "Vui lòng nhập địa chỉ giao hàng."
+      });
+      return;
+    }
+
+    console.log("Đang gửi đơn hàng lên Apps Script:", {
+      product,
+      name,
+      phone,
+      address,
+      vat
+    });
+
+    submitOrderBtn.disabled = true;
+    submitOrderBtn.innerText = "ĐANG GỬI...";
+
+    isSubmittingOrder = true;
+
+    // Dòng này mới thực sự submit form lên Apps Script
+    orderForm.submit();
+  });
+
+  hiddenIframe.addEventListener("load", function () {
+    if (!isSubmittingOrder) return;
+
+    isSubmittingOrder = false;
+
+    Swal.fire({
+      icon: "success",
+      title: "Đặt hàng thành công!",
+      text: "Đội ngũ Atlantis sẽ sớm liên hệ để xác nhận đơn hàng."
+    });
+
+    orderForm.reset();
+    setTrackingFields();
+
+    submitOrderBtn.disabled = false;
+    submitOrderBtn.innerText = "HOÀN TẤT ĐẶT HÀNG";
+  });
+}});
 
 // ==========================================
 // MÔ PHỎNG DỮ LIỆU TỪ API & RENDER ĐỘNG
@@ -871,3 +996,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 800);
 });
+
+
