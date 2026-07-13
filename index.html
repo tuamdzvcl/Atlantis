@@ -40,7 +40,7 @@
             }
           },
           animation: {
-            'shake-periodic': 'shakePeriodic 3s ease-in-out infinite',
+            'shake-periodic': 'shakePeriodic 2s ease-in-out infinite',
           },
         },
       },
@@ -83,133 +83,145 @@
         class="bg-primary text-white px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">
         <i class="ph-fill ph-phone-call text-xl"></i> Tư vấn miễn phí
       </a>
-    </header> 
-      <!-- Hero Banner Section (Drag to Fade) -->
-  <section id="hero-section" class="relative text-white overflow-hidden min-h-[90vh] lg:min-h-screen cursor-grab select-none">
-    
-    <!-- State 1: Video Background -->
-    <div id="slide-video" class="hidden lg:block absolute inset-0 w-full h-full z-20 opacity-100 pointer-events-auto">
-      <video class="absolute inset-0 w-full h-full object-cover pointer-events-none" autoplay muted loop playsinline>
-        <source src="img/Video banner trụng bún.mp4" type="video/mp4" />
-      </video>
-      <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
-      <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-none animate-bounce">
-        <span class="text-white text-base font-bold tracking-widest uppercase mb-2 drop-shadow-lg text-center">Kéo sang trái<br>để khám phá</span>
-        <div class="flex gap-2 text-white drop-shadow-lg mt-1">
-          <i class="ph-bold ph-hand-swipe-left text-4xl"></i>
-        </div>
+  </header>
+  <!-- Hero Banner Section (Drag to Fade) -->
+  <div class="relative">
+    <section id="hero-section"
+      class="relative text-white overflow-hidden min-h-[90vh] lg:min-h-screen cursor-grab select-none">
+
+      <!-- State 1: Video Background -->
+      <div id="slide-video" class="absolute inset-0 w-full h-full z-20 opacity-100 pointer-events-auto bg-black">
+        <video id="hero-banner-video" class="absolute inset-0 w-full h-full object-cover pointer-events-none" autoplay
+          muted playsinline loop>
+          <!-- Nguồn video sẽ được load tự động qua Javascript tùy theo thiết bị -->
+        </video>
+        <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+
       </div>
-    </div>
 
-    <!-- State 2: Image Background + Content -->
-    <div id="slide-content" class="absolute inset-0 w-full h-full z-30 opacity-100 pointer-events-auto lg:opacity-0 lg:pointer-events-none bg-cover bg-center flex items-center justify-center overflow-y-auto" style="background-image: url('img/z8019800079076_b7ad02663c5dcf9b4966d7c15c79f87b.jpg');">
-      <!-- Dark overlay -->
-      <div class="absolute inset-0 bg-black/60 pointer-events-none"></div>
+      <!-- State 2: Image Background + Content -->
+      <div id="slide-content"
+        class="relative w-full min-h-[90vh] lg:min-h-screen z-30 opacity-100 pointer-events-auto lg:opacity-0 lg:pointer-events-none bg-cover bg-center flex items-center justify-center"
+        style="background-image: url('img/z8019800079076_b7ad02663c5dcf9b4966d7c15c79f87b.jpg');">
+        <!-- Dark overlay -->
+        <div class="absolute inset-0 bg-black/60 pointer-events-none"></div>
 
-      <!-- Main Content -->
-      <div class="container mx-auto max-w-6xl px-4 flex flex-col lg:flex-row items-center gap-12 relative z-30 py-16 mt-8 lg:mt-0">
-        <!-- Text Content -->
-        <div class="lg:w-1/2 flex flex-col items-start z-10" id="hero-text-content">
-          <div class="bg-white/20 px-4 py-1 rounded-full text-sm font-medium mb-6 backdrop-blur-sm pointer-events-auto">
-            ✨ Sản phẩm chính hãng 100%
-          </div>
-          <h1 class="text-3xl lg:text-5xl font-bold leading-tight mb-4 pointer-events-auto">
-            Bếp Trụng Đa Năng
-            <span style="
+        <!-- Main Content -->
+        <div
+          class="container mx-auto max-w-6xl px-4 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-50 py-12 lg:pt-16 lg:pb-48 mt-8 lg:mt-0">
+          <!-- Text Content -->
+          <div class="lg:w-1/2 flex flex-col items-start z-10" id="hero-text-content">
+            <div
+              class="bg-white/20 px-4 py-1 rounded-full text-sm font-medium mb-6 backdrop-blur-sm pointer-events-auto">
+              ✨ Sản phẩm chính hãng 100%
+            </div>
+            <h1 class="text-3xl lg:text-5xl font-bold leading-tight mb-4 pointer-events-auto">
+              Bếp Trụng Đa Năng
+              <span style="
                   background: linear-gradient(to right, #0ea5e9 50%, #0369a1 100%);
                   -webkit-background-clip: text;
                   -webkit-text-fill-color: transparent;
                 ">Atlantis</span>
-          </h1>
-          <p class="text-lg md:text-xl text-white-600 mb-6 leading-relaxed max-w-xl drop-shadow-sm pointer-events-auto">
-            Giải pháp trụng bún phở
-            <strong class="text-[#FFC107] font-bold drop-shadow-md">chuyên nghiệp</strong>
-            cho quán ăn, nhà hàng.
-            <strong class="text-[#FFC107] font-bold drop-shadow-md">Tiết kiệm thời gian</strong>,
-            <strong class="text-[#FFC107] font-bold drop-shadow-md">năng suất cao</strong>, đảm bảo
-            <strong class="text-[#FFC107] font-bold drop-shadow-md">vệ sinh an toàn thực phẩm</strong>.
-          </p>
+            </h1>
+            <p
+              class="text-lg md:text-xl text-white-600 mb-6 leading-relaxed max-w-xl drop-shadow-sm pointer-events-auto">
+              Giải pháp trụng bún phở
+              <strong class="text-[#FFC107] font-bold drop-shadow-md">chuyên nghiệp</strong>
+              cho quán ăn, nhà hàng.
+              <strong class="text-[#FFC107] font-bold drop-shadow-md">Tiết kiệm thời gian</strong>,
+              <strong class="text-[#FFC107] font-bold drop-shadow-md">năng suất cao</strong>, đảm bảo
+              <strong class="text-[#FFC107] font-bold drop-shadow-md">vệ sinh an toàn thực phẩm</strong>.
+            </p>
 
-          <ul class="space-y-4 mb-8 text-lg text-blue-50 pointer-events-auto">
-            <li class="flex items-center gap-3">
-              <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
-              Gia nhiệt siêu tốc, tiết kiệm điện năng
-            </li>
-            <li class="flex items-center gap-3">
-              <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
-              Inox 304 cao cấp, chống gỉ sét bền bỉ
-            </li>
-            <li class="flex items-center gap-3">
-              <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
-              Bảng điều khiển trực quan, dễ sử dụng
-            </li>
-            <li class="flex items-center gap-3">
-              <i class="ph-fill ph-check-circle text-2xl text-green-400"></i> Đa
-              dạng mẫu mã cho mọi mô hình kinh doanh
-            </li>
-          </ul>
+            <ul class="space-y-4 mb-8 text-lg text-blue-50 pointer-events-auto">
+              <li class="flex items-center gap-3">
+                <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
+                Gia nhiệt siêu tốc, tiết kiệm điện năng
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
+                Inox 304 cao cấp, chống gỉ sét bền bỉ
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="ph-fill ph-check-circle text-2xl text-green-400"></i>
+                Bảng điều khiển trực quan, dễ sử dụng
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="ph-fill ph-check-circle text-2xl text-green-400"></i> Đa
+                dạng mẫu mã cho mọi mô hình kinh doanh
+              </li>
+            </ul>
 
-          <div class="flex gap-4 pointer-events-auto">
-            <a href="#banggia"
-              class="bg-accent text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-red-700 transition-transform hover:scale-105 shadow-xl">
-              Đặt hàng ngay
-            </a>
-            <a href="#chitiet"
-              class="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-transform hover:scale-105 shadow-xl">
-              Xem chi tiết
-            </a>
+            <div class="flex gap-4 pointer-events-auto">
+              <a href="#banggia"
+                class="bg-accent text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-red-700 transition-transform hover:scale-105 shadow-xl">
+                Đặt hàng ngay
+              </a>
+              <a href="#chitiet"
+                class="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-transform hover:scale-105 shadow-xl">
+                Xem chi tiết
+              </a>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="lg:w-1/2 relative pointer-events-auto" id="hero-image-content">
+            <div
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/20 rounded-full blur-3xl pointer-events-none">
+            </div>
+            <video class="relative z-10 w-full rounded-2xl shadow-2xl  border-white/10" autoplay muted loop playsinline>
+              <source src="./img/Video banner trụng bún.mp4" type="video/mp4" />
+              Trình duyệt của bạn không hỗ trợ video.
+            </video>
           </div>
         </div>
+      </div>
 
-        <!-- Image -->
-        <div class="lg:w-1/2 relative pointer-events-auto" id="hero-image-content">
+    </section>
+
+    <!-- Trust Badges Overlay / Mobile Separated -->
+    <section
+      class="py-8 bg-white border-b border-gray-200 lg:absolute lg:bottom-0 lg:left-0 lg:w-full lg:z-40 lg:bg-transparent lg:border-none lg:bg-gradient-to-t lg:from-black/90 lg:via-black/50 lg:pointer-events-none lg:pt-16 lg:pb-6">
+      <div class="container mx-auto max-w-6xl px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="0">
           <div
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/20 rounded-full blur-3xl pointer-events-none">
+            class="w-12 h-12 rounded-full lg:bg-white/10 lg:backdrop-blur-md flex items-center justify-center mb-2 lg:mb-3 lg:border lg:border-white/20 lg:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <i class="ph ph-truck text-4xl lg:text-2xl text-primary lg:text-blue-400 lg:drop-shadow"></i>
           </div>
-          <video class="relative z-10 w-full rounded-2xl shadow-2xl  border-white/10" autoplay muted loop playsinline>
-            <source src="./img/Video banner trụng bún.mp4" type="video/mp4" />
-            Trình duyệt của bạn không hỗ trợ video.
-          </video>
+          <h4 class="font-bold text-gray-800 lg:text-white text-sm lg:text-base lg:drop-shadow-md">Giao hàng toàn quốc
+          </h4>
+          <p class="text-xs lg:text-sm text-gray-500 lg:text-gray-300 lg:drop-shadow">Nhanh chóng & an toàn</p>
+        </div>
+        <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="100">
+          <div
+            class="w-12 h-12 rounded-full lg:bg-white/10 lg:backdrop-blur-md flex items-center justify-center mb-2 lg:mb-3 lg:border lg:border-white/20 lg:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <i
+              class="ph ph-arrows-counter-clockwise text-4xl lg:text-2xl text-primary lg:text-blue-400 lg:drop-shadow"></i>
+          </div>
+          <h4 class="font-bold text-gray-800 lg:text-white text-sm lg:text-base lg:drop-shadow-md">Đổi trả dễ dàng</h4>
+          <p class="text-xs lg:text-sm text-gray-500 lg:text-gray-300 lg:drop-shadow">Đổi trả hàng linh hoạt theo chính
+            sách</p>
+        </div>
+        <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="200">
+          <div
+            class="w-12 h-12 rounded-full lg:bg-white/10 lg:backdrop-blur-md flex items-center justify-center mb-2 lg:mb-3 lg:border lg:border-white/20 lg:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <i class="ph ph-medal text-4xl lg:text-2xl text-primary lg:text-blue-400 lg:drop-shadow"></i>
+          </div>
+          <h4 class="font-bold text-gray-800 lg:text-white text-sm lg:text-base lg:drop-shadow-md">Cam kết chính hãng
+          </h4>
+          <p class="text-xs lg:text-sm text-gray-500 lg:text-gray-300 lg:drop-shadow">Sản phẩm bao gồm VAT</p>
+        </div>
+        <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="300">
+          <div
+            class="w-12 h-12 rounded-full lg:bg-white/10 lg:backdrop-blur-md flex items-center justify-center mb-2 lg:mb-3 lg:border lg:border-white/20 lg:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <i class="ph ph-headset text-4xl lg:text-2xl text-primary lg:text-blue-400 lg:drop-shadow"></i>
+          </div>
+          <h4 class="font-bold text-gray-800 lg:text-white text-sm lg:text-base lg:drop-shadow-md">Hỗ trợ 24/7</h4>
+          <p class="text-xs lg:text-sm text-gray-500 lg:text-gray-300 lg:drop-shadow">Luôn sẵn sàng tư vấn</p>
         </div>
       </div>
-
-      <!-- Back indicator -->
-      <div class="hidden lg:flex absolute bottom-6 left-1/2 transform -translate-x-1/2 flex-col items-center pointer-events-none opacity-50">
-        <div class="flex gap-2 text-white items-center">
-          <i class="ph-bold ph-hand-swipe-right text-2xl"></i>
-          <span class="text-xs font-medium uppercase tracking-wider">Kéo sang phải để về video</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Trust Badges -->
-  <section class="py-8 bg-white border-b border-gray-200">
-    <div class="container mx-auto max-w-6xl px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="0">
-        <i class="ph ph-truck text-4xl text-primary mb-2"></i>
-        <h4 class="font-bold text-gray-800">Giao hàng toàn quốc</h4>
-        <p class="text-sm text-gray-500">Nhanh chóng & an toàn</p>
-      </div>
-      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="100">
-        <i class="ph ph-arrows-counter-clockwise text-4xl text-primary mb-2"></i>
-        <h4 class="font-bold text-gray-800">Đổi trả dễ dàng</h4>
-        <p class="text-sm text-gray-500">
-          Đổi trả hàng linh hoạt theo chính sách của công ty
-        </p>
-      </div>
-      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="200">
-        <i class="ph ph-medal text-4xl text-primary mb-2"></i>
-        <h4 class="font-bold text-gray-800">Cam kết chính hãng</h4>
-        <p class="text-sm text-gray-500">Sản phẩm bao gồm VAT</p>
-      </div>
-      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="300">
-        <i class="ph ph-headset text-4xl text-primary mb-2"></i>
-        <h4 class="font-bold text-gray-800">Hỗ trợ 24/7</h4>
-        <p class="text-sm text-gray-500">Luôn sẵn sàng tư vấn</p>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
   <section class="py-16 bg-white relative overflow-hidden">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
@@ -396,7 +408,7 @@
           </div>
           <div class="sm:w-1/2 order-1 sm:order-2 w-full">
             <img src="https://trungbunatlantis.store/wp-content/uploads/2026/05/Untitled-1.jpg" alt="Tốc độ gia nhiệt"
-              class="rounded-xl shadow-sm w-full h-48 sm:h-full object-cover" />
+              class="rounded-xl shadow-sm w-full h-56 lg:h-64 object-cover" />
           </div>
         </div>
 
@@ -419,7 +431,7 @@
           </div>
           <div class="sm:w-1/2 order-1 sm:order-2 w-full">
             <img src="./img/z8019800079079_32678d2b747ba83090caced61e348c46.jpg" alt="Chất liệu Inox"
-              class="rounded-xl shadow-sm w-full h-48 sm:h-full object-cover" />
+              class="rounded-xl shadow-sm w-full h-56 lg:h-64 object-cover" />
           </div>
         </div>
 
@@ -442,7 +454,7 @@
           </div>
           <div class="sm:w-1/2 order-1 sm:order-2 w-full">
             <img src="./img/z7345484422385_cc140105b9589e0f9cfadc51e8cb4d4c-Recovered.jpg" alt="Tiết kiệm điện"
-              class="rounded-xl shadow-sm w-full h-48 sm:h-full object-cover" />
+              class="rounded-xl shadow-sm w-full h-56 lg:h-64 object-cover" />
           </div>
         </div>
 
@@ -466,7 +478,7 @@
           <div class="sm:w-1/2 order-1 sm:order-2 w-full">
             <img
               src="https://trungbunatlantis.store/wp-content/uploads/2026/05/z7207221430013_0f0cae871f927f056138b5bf37368233-scaled.jpg"
-              alt="Nguồn gốc rõ ràng" class="rounded-xl shadow-sm w-full h-48 sm:h-full object-cover" />
+              alt="Nguồn gốc rõ ràng" class="rounded-xl shadow-sm w-full h-56 lg:h-64 object-cover" />
           </div>
         </div>
       </div>
@@ -540,7 +552,7 @@
 
           <div class="space-y-6">
             <!-- Item 1 -->
-            <div class="flex gap-4">
+            <div class="flex gap-4 items-center">
               <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center shrink-0">
                 <img src="./img/bophan1.png" class="text-2xl" alt="">
               </div>
@@ -556,7 +568,7 @@
             </div>
 
             <!-- Item 2 -->
-            <div class="flex gap-4">
+            <div class="flex gap-4 items-center">
               <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center shrink-0">
                 <img src="./img/bophan1.png" class="text-2xl" alt="">
               </div>
@@ -572,7 +584,7 @@
             </div>
 
             <!-- Item 3 -->
-            <div class="flex gap-4">
+            <div class="flex gap-4 items-center">
               <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center shrink-0">
                 <img src="./img/bophan1.png" class="text-2xl" alt="">
               </div>
@@ -588,7 +600,7 @@
             </div>
 
             <!-- Item 4 -->
-            <div class="flex gap-4">
+            <div class="flex gap-4 items-center">
               <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center shrink-0">
                 <img src="./img/bophan1.png" class="text-2xl" alt="">
               </div>
@@ -604,7 +616,7 @@
             </div>
 
             <!-- Item 5 -->
-            <div class="flex gap-4">
+            <div class="flex gap-4 items-center">
               <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center shrink-0">
                 <img src="./img/bophan1.png" class="text-2xl" alt="">
               </div>
@@ -1003,7 +1015,7 @@
             Thông Tin Đặt Hàng
           </h4>
           <form id="orderForm"
-            action="https://script.google.com/macros/s/AKfycbzVEejOvdOcH5qTkBJYRlfVD4hew0U3YlFOtRHOYiai_RGGKBtNWWEgdzSs6utLFWIx/exec"
+            action="https://script.google.com/macros/s/AKfycbw_jCzizdzTKBCkJ7O_FEHaqFo8chg8PEg2tVH_WXfXr4cX_1Sic_Ft0XdCJ_05xe3O/exec"
             target="hidden_iframe" method="post" class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Chọn sản phẩm <span
@@ -1048,7 +1060,19 @@
             </div>
             <input type="text" name="company" style="display: none" tabindex="-1" autocomplete="off" />
 
+            <div id="voucherContainer" class="hidden mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl flex items-center justify-between shadow-sm">
+              <div class="flex items-center gap-3 text-yellow-800">
+                <i class="ph-fill ph-ticket text-3xl text-yellow-600"></i>
+                <div>
+                  <div class="font-bold text-base">Voucher -200K</div>
+                  <div class="text-sm">Áp dụng ngay!</div>
+                </div>
+              </div>
+              <button type="button" id="applyVoucherBtn" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-bold text-sm transition-colors shadow-sm">Áp dụng</button>
+            </div>
+
             <!-- Các field ẩn để tracking -->
+            <input type="hidden" name="voucher" id="voucherInput" value="" />
             <input type="hidden" name="pageUrl" id="pageUrl" />
             <input type="hidden" name="userAgent" id="userAgent" />
 

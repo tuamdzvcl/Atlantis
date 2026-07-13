@@ -863,6 +863,85 @@ document.addEventListener("DOMContentLoaded", () => {
       submitOrderBtn.innerText = "HOÀN TẤT ĐẶT HÀNG";
     });
   }
+
+  // --- EXIT INTENT VOUCHER LOGIC ---
+  const showExitIntentPopup = () => {
+    if (sessionStorage.getItem('voucherShown') || sessionStorage.getItem('hasVoucher')) {
+      return;
+    }
+    sessionStorage.setItem('voucherShown', 'true');
+    
+    Swal.fire({
+      title: 'Khoan đã! Đừng vội rời đi!',
+      text: 'Bạn sẽ bỏ lỡ cơ hội nhận Voucher giảm giá 200.000đ cho đơn hàng hôm nay.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#0078D4',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Nhận Voucher 200k',
+      cancelButtonText: 'Không, tôi muốn thoát'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        sessionStorage.setItem('hasVoucher', 'true');
+        Swal.fire(
+          'Đã nhận thành công!',
+          'Voucher 200.000đ đã được lưu. Hãy kéo xuống phần thanh toán để áp dụng nhé!',
+          'success'
+        ).then(() => {
+           window.location.href = "#dathang";
+        });
+        checkVoucherStatus();
+      }
+    });
+  };
+
+  const checkVoucherStatus = () => {
+    const voucherContainer = document.getElementById("voucherContainer");
+    if (sessionStorage.getItem('hasVoucher') === 'true' && voucherContainer) {
+      voucherContainer.classList.remove('hidden');
+    }
+  };
+  
+  // Check on load
+  checkVoucherStatus();
+
+  // Handle Apply Voucher button
+  const applyVoucherBtn = document.getElementById("applyVoucherBtn");
+  const voucherInput = document.getElementById("voucherInput");
+  if (applyVoucherBtn) {
+    applyVoucherBtn.addEventListener("click", () => {
+       applyVoucherBtn.textContent = "Đã áp dụng";
+       applyVoucherBtn.classList.remove("bg-yellow-500", "hover:bg-yellow-600");
+       applyVoucherBtn.classList.add("bg-green-500", "cursor-default");
+       applyVoucherBtn.disabled = true;
+       
+       if (voucherInput) {
+         voucherInput.value = "GIAM200K"; // Sends to Google Sheets
+       }
+       
+       Swal.fire({
+          icon: 'success',
+          title: 'Đã áp dụng Voucher!',
+          text: 'Voucher 200.000đ đã được thêm vào đơn hàng. Chuyên viên sẽ giảm trừ trực tiếp khi gọi xác nhận.'
+       });
+    });
+  }
+
+  // Detect exit on desktop
+ 
+
+  // Detect exit on mobile (back button trap)
+  if (window.history && window.history.pushState) {
+    window.history.pushState('forward', null, '');
+    window.addEventListener('popstate', (e) => {
+      if (!sessionStorage.getItem('voucherShown')) {
+        console.log("test");
+        
+        showExitIntentPopup();
+        window.history.pushState('forward', null, ''); // Trap again
+      }
+    });
+  }
 });
 
 // ==========================================
@@ -956,10 +1035,10 @@ window.renderProductFromAPI = (data) => {
       </div>
       
       <div class="p-4 md:p-8 md:w-1/2 flex flex-col justify-center">
-        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">${data.name
+        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">${data.name
     }</h3>
         
-        <div class="flex items-center gap-1.5 md:gap-3 mb-4 text-[11px] sm:text-xs md:text-sm whitespace-nowrap">
+        <div class="flex items-center gap-1.5 md:gap-3 mb-4 text-[11px] sm:text-lg md:text-sm whitespace-nowrap">
           <div class="flex text-yellow-400">
             <i class="ph-fill ph-star"></i>
           </div>
@@ -1055,6 +1134,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const heroSection = document.getElementById("hero-section");
       const slideVideo = document.getElementById("slide-video");
       const slideContent = document.getElementById("slide-content");
+      const heroBannerVideo = document.getElementById("hero-banner-video");
       
       let isDragging = false;
       let startX = 0;
@@ -1065,14 +1145,22 @@ document.addEventListener("DOMContentLoaded", () => {
         return window.innerWidth < 1024;
       }
 
-      let currentIndex = isMobile() ? 1 : 0; 
+      let currentIndex = 0; 
 
-      if (isMobile()) {
-        setTimeout(() => {
-           document.getElementById('hero-text-content').setAttribute('data-aos', 'fade-right');
-           document.getElementById('hero-image-content').setAttribute('data-aos', 'fade-left');
-           if (typeof AOS !== 'undefined') AOS.refreshHard();
-        }, 100);
+      if (heroBannerVideo) {
+        // Tự động chọn video dọc hoặc ngang tùy theo màn hình lúc load
+        const isPhone = window.innerWidth < 768;
+        const videoSrc = isPhone ? "img/Video banner dọc.mp4" : "img/Video banner trụng bún.mp4";
+        heroBannerVideo.innerHTML = `<source src="${videoSrc}" type="video/mp4" />`;
+        heroBannerVideo.load();
+
+        heroBannerVideo.addEventListener('ended', () => {
+          if (currentIndex === 0) {
+            currentIndex = 1;
+            applyTransitionClasses();
+            finalizeSlideState();
+          }
+        });
       }
 
       function getPositionX(event) {
@@ -1114,8 +1202,8 @@ document.addEventListener("DOMContentLoaded", () => {
             slideVideo.classList.add('opacity-100', 'pointer-events-auto');
           }
           if (slideContent) {
-            slideContent.classList.remove('opacity-100', 'pointer-events-auto');
-            slideContent.classList.add('opacity-0', 'pointer-events-none');
+            slideContent.classList.remove('opacity-100', 'pointer-events-auto', 'lg:opacity-100', 'lg:pointer-events-auto');
+            slideContent.classList.add('opacity-0', 'pointer-events-none', 'lg:opacity-0', 'lg:pointer-events-none');
           }
         } else {
           if (slideVideo) {
@@ -1123,8 +1211,8 @@ document.addEventListener("DOMContentLoaded", () => {
             slideVideo.classList.add('opacity-0', 'pointer-events-none');
           }
           if (slideContent) {
-            slideContent.classList.remove('opacity-0', 'pointer-events-none');
-            slideContent.classList.add('opacity-100', 'pointer-events-auto');
+            slideContent.classList.remove('opacity-0', 'pointer-events-none', 'lg:opacity-0', 'lg:pointer-events-none');
+            slideContent.classList.add('opacity-100', 'pointer-events-auto', 'lg:opacity-100', 'lg:pointer-events-auto');
           }
 
           if (!aosRefreshed) {
@@ -1139,8 +1227,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       function touchStart(event) {
-        if (isMobile()) return;
-
         // Prevent default for mouse events to avoid selecting text/images
         if(event.type.includes('mouse') && event.target.tagName !== 'A' && event.target.tagName !== 'BUTTON') {
           event.preventDefault();
@@ -1156,8 +1242,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       function touchMove(event) {
-        if (isMobile()) return;
-
         if (isDragging) {
           const currentPosition = getPositionX(event);
           const diff = currentPosition - startX;
@@ -1182,8 +1266,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       function touchEnd() {
-        if (isMobile()) return;
-
         if (!isDragging) return;
         isDragging = false;
         
