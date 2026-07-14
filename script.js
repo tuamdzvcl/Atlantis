@@ -888,14 +888,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }).then((result) => {
       if (result.isConfirmed) {
         sessionStorage.setItem('hasVoucher', 'true');
-        Swal.fire(
-          'Đã nhận thành công!',
-          'Voucher 200.000đ đã được lưu. Hãy kéo xuống phần thanh toán để áp dụng nhé!',
-          'success'
-        ).then(() => {
-          window.location.href = "#dathang";
-        });
         checkVoucherStatus();
+
+        // 1. Dùng Toast (thông báo nhỏ góc phải) thay vì popup lớn để không khóa màn hình
+        Toast.fire({
+          icon: 'success',
+          title: 'Đã nhận Voucher 200k!',
+        });
+
+        // 2. Buộc đóng popup hiện tại ngay lập tức để mở khóa cuộn trang
+        Swal.close();
+
+        // 3. Sử dụng window.scrollTo với tính toán tọa độ chính xác
+        setTimeout(() => {
+          const dathangSection = document.getElementById("dathang");
+          if (dathangSection) {
+            // Tính toán vị trí trừ đi 80px của thanh header (menu dính bên trên)
+            const y = dathangSection.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }, 300); // Tăng delay lên 300ms để đảm bảo trình duyệt đã kết thúc sự kiện popstate
       }
     });
   };
