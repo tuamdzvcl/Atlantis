@@ -966,7 +966,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ==========================================
 const mockApiProductData = {
   id: "SP_ATLANTIS_01",
-  name: "Bếp Trụng Đa Năng",
+  name: "Bếp Trụng Đa Năng 2/4",
   rating: 4.9,
   reviewsCount: 128,
   soldCount: "2.466",
@@ -988,7 +988,7 @@ const mockApiProductData = {
     {
       id: "304",
       name: "Inox 304",
-      desc: "Tốt nhất được lựa chọn nhiều nhất",
+      desc: "Tốt nhất được,lựa chọn nhiều nhất",
       price: 5500000,
       originalPrice: 7150000,
       discount: 30,
@@ -1037,7 +1037,7 @@ window.renderProductFromAPI = (data) => {
         <!-- Main Image -->
         <div class="relative w-full h-64 md:h-80 flex justify-center items-center group cursor-pointer" onclick="openLightbox()">
           <img id="mainProductImage" src="./img/trungbun2rovabat.png" alt="${data.name
-    }" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+    }" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-300" />
           <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
             <div class="bg-white/80 w-12 h-12 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm">
               <i class="ph-bold ph-magnifying-glass-plus text-2xl text-primary"></i>
