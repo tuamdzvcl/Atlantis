@@ -865,12 +865,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- EXIT INTENT VOUCHER LOGIC ---
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.removeItem('voucherShown');
+    sessionStorage.removeItem('hasVoucher');
+  });
+
   const showExitIntentPopup = () => {
     if (sessionStorage.getItem('voucherShown') || sessionStorage.getItem('hasVoucher')) {
       return;
     }
     sessionStorage.setItem('voucherShown', 'true');
-    
+
     Swal.fire({
       title: 'Khoan đã! Đừng vội rời đi!',
       text: 'Bạn sẽ bỏ lỡ cơ hội nhận Voucher giảm giá 200.000đ cho đơn hàng hôm nay.',
@@ -888,7 +893,7 @@ document.addEventListener("DOMContentLoaded", () => {
           'Voucher 200.000đ đã được lưu. Hãy kéo xuống phần thanh toán để áp dụng nhé!',
           'success'
         ).then(() => {
-           window.location.href = "#dathang";
+          window.location.href = "#dathang";
         });
         checkVoucherStatus();
       }
@@ -901,7 +906,7 @@ document.addEventListener("DOMContentLoaded", () => {
       voucherContainer.classList.remove('hidden');
     }
   };
-  
+
   // Check on load
   checkVoucherStatus();
 
@@ -910,25 +915,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const voucherInput = document.getElementById("voucherInput");
   if (applyVoucherBtn) {
     applyVoucherBtn.addEventListener("click", () => {
-       applyVoucherBtn.textContent = "Đã áp dụng";
-       applyVoucherBtn.classList.remove("bg-yellow-500", "hover:bg-yellow-600");
-       applyVoucherBtn.classList.add("bg-green-500", "cursor-default");
-       applyVoucherBtn.disabled = true;
-       
-       if (voucherInput) {
-         voucherInput.value = "GIAM200K"; // Sends to Google Sheets
-       }
-       
-       Swal.fire({
-          icon: 'success',
-          title: 'Đã áp dụng Voucher!',
-          text: 'Voucher 200.000đ đã được thêm vào đơn hàng. Chuyên viên sẽ giảm trừ trực tiếp khi gọi xác nhận.'
-       });
+      applyVoucherBtn.textContent = "Đã áp dụng";
+      applyVoucherBtn.classList.remove("bg-yellow-500", "hover:bg-yellow-600");
+      applyVoucherBtn.classList.add("bg-green-500", "cursor-default");
+      applyVoucherBtn.disabled = true;
+
+      if (voucherInput) {
+        voucherInput.value = "GIAM200K"; // Sends to Google Sheets
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Đã áp dụng Voucher!',
+        text: 'Voucher 200.000đ đã được thêm vào đơn hàng. Chuyên viên sẽ giảm trừ trực tiếp khi gọi xác nhận.'
+      });
     });
   }
 
   // Detect exit on desktop
- 
+
 
   // Detect exit on mobile (back button trap)
   if (window.history && window.history.pushState) {
@@ -936,7 +941,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('popstate', (e) => {
       if (!sessionStorage.getItem('voucherShown')) {
         console.log("test");
-        
+
         showExitIntentPopup();
         window.history.pushState('forward', null, ''); // Trap again
       }
@@ -1131,180 +1136,180 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // video banner
 document.addEventListener("DOMContentLoaded", () => {
-      const heroSection = document.getElementById("hero-section");
-      const slideVideo = document.getElementById("slide-video");
-      const slideContent = document.getElementById("slide-content");
-      const heroBannerVideo = document.getElementById("hero-banner-video");
-      
-      let isDragging = false;
-      let startX = 0;
-      let dragDistance = 0;
-      let aosRefreshed = false;
+  const heroSection = document.getElementById("hero-section");
+  const slideVideo = document.getElementById("slide-video");
+  const slideContent = document.getElementById("slide-content");
+  const heroBannerVideo = document.getElementById("hero-banner-video");
 
-      function isMobile() {
-        return window.innerWidth < 1024;
-      }
+  let isDragging = false;
+  let startX = 0;
+  let dragDistance = 0;
+  let aosRefreshed = false;
 
-      let currentIndex = 0; 
+  function isMobile() {
+    return window.innerWidth < 1024;
+  }
 
-      if (heroBannerVideo) {
-        // Tự động chọn video dọc hoặc ngang tùy theo màn hình lúc load
-        const isPhone = window.innerWidth < 768;
-        const videoSrc = isPhone ? "img/Video banner dọc.mp4" : "img/Video banner trụng bún.mp4";
-        heroBannerVideo.innerHTML = `<source src="${videoSrc}" type="video/mp4" />`;
-        heroBannerVideo.load();
+  let currentIndex = 0;
 
-        heroBannerVideo.addEventListener('ended', () => {
-          if (currentIndex === 0) {
-            currentIndex = 1;
-            applyTransitionClasses();
-            finalizeSlideState();
-          }
-        });
-      }
+  if (heroBannerVideo) {
+    // Tự động chọn video dọc hoặc ngang tùy theo màn hình lúc load
+    const isPhone = window.innerWidth < 768;
+    const videoSrc = isPhone ? "img/0714.mp4" : "img/Video banner trụng bún.mp4";
+    heroBannerVideo.innerHTML = `<source src="${videoSrc}" type="video/mp4" />`;
+    heroBannerVideo.load();
 
-      function getPositionX(event) {
-        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-      }
-
-      function updateSlideOpacity(progress) {
-        let opVideo, opContent;
-        if (currentIndex === 0) {
-          opVideo = 1 - progress;
-          opContent = progress;
-        } else {
-          opVideo = progress;
-          opContent = 1 - progress;
-        }
-        
-        if (slideVideo) slideVideo.style.opacity = opVideo;
-        if (slideContent) slideContent.style.opacity = opContent;
-      }
-
-      function applyTransitionClasses() {
-        if (slideVideo) slideVideo.classList.add('transition-opacity', 'duration-500', 'ease-in-out');
-        if (slideContent) slideContent.classList.add('transition-opacity', 'duration-500', 'ease-in-out');
-      }
-
-      function removeTransitionClasses() {
-        if (slideVideo) slideVideo.classList.remove('transition-opacity', 'duration-500', 'ease-in-out');
-        if (slideContent) slideContent.classList.remove('transition-opacity', 'duration-500', 'ease-in-out');
-      }
-
-      function finalizeSlideState() {
-        // Remove inline opacity styles so CSS classes take over
-        if (slideVideo) slideVideo.style.opacity = '';
-        if (slideContent) slideContent.style.opacity = '';
-
-        if (currentIndex === 0) {
-          if (slideVideo) {
-            slideVideo.classList.remove('opacity-0', 'pointer-events-none');
-            slideVideo.classList.add('opacity-100', 'pointer-events-auto');
-          }
-          if (slideContent) {
-            slideContent.classList.remove('opacity-100', 'pointer-events-auto', 'lg:opacity-100', 'lg:pointer-events-auto');
-            slideContent.classList.add('opacity-0', 'pointer-events-none', 'lg:opacity-0', 'lg:pointer-events-none');
-          }
-        } else {
-          if (slideVideo) {
-            slideVideo.classList.remove('opacity-100', 'pointer-events-auto');
-            slideVideo.classList.add('opacity-0', 'pointer-events-none');
-          }
-          if (slideContent) {
-            slideContent.classList.remove('opacity-0', 'pointer-events-none', 'lg:opacity-0', 'lg:pointer-events-none');
-            slideContent.classList.add('opacity-100', 'pointer-events-auto', 'lg:opacity-100', 'lg:pointer-events-auto');
-          }
-
-          if (!aosRefreshed) {
-             document.getElementById('hero-text-content').setAttribute('data-aos', 'fade-right');
-             document.getElementById('hero-image-content').setAttribute('data-aos', 'fade-left');
-             if (typeof AOS !== 'undefined') {
-               AOS.refreshHard();
-               aosRefreshed = true;
-             }
-          }
-        }
-      }
-
-      function touchStart(event) {
-        // Prevent default for mouse events to avoid selecting text/images
-        if(event.type.includes('mouse') && event.target.tagName !== 'A' && event.target.tagName !== 'BUTTON') {
-          event.preventDefault();
-        }
-        
-        isDragging = true;
-        dragDistance = 0;
-        startX = getPositionX(event);
-        
-        removeTransitionClasses();
-        heroSection.classList.add('cursor-grabbing');
-        heroSection.classList.remove('cursor-grab');
-      }
-
-      function touchMove(event) {
-        if (isDragging) {
-          const currentPosition = getPositionX(event);
-          const diff = currentPosition - startX;
-          dragDistance = diff;
-          
-          // Calculate progress based on screen width
-          const requiredDistance = Math.min(window.innerWidth / 2, 400);
-          
-          let progress = 0;
-          if (currentIndex === 0 && diff < 0) {
-            // Dragging left from video
-            progress = Math.min(1, Math.abs(diff) / requiredDistance);
-          } else if (currentIndex === 1 && diff > 0) {
-            // Dragging right from content
-            progress = Math.min(1, Math.abs(diff) / requiredDistance);
-          }
-          
-          if (progress > 0) {
-             updateSlideOpacity(progress);
-          }
-        }
-      }
-
-      function touchEnd() {
-        if (!isDragging) return;
-        isDragging = false;
-        
+    heroBannerVideo.addEventListener('ended', () => {
+      if (currentIndex === 0) {
+        currentIndex = 1;
         applyTransitionClasses();
-        heroSection.classList.remove('cursor-grabbing');
-        heroSection.classList.add('cursor-grab');
-
-        const requiredDistance = Math.min(window.innerWidth / 2, 400);
-        const threshold = 0.25; // 25% to trigger change
-        
-        let progress = 0;
-        if (currentIndex === 0 && dragDistance < 0) {
-          progress = Math.abs(dragDistance) / requiredDistance;
-          if (progress > threshold) currentIndex = 1;
-        } else if (currentIndex === 1 && dragDistance > 0) {
-          progress = Math.abs(dragDistance) / requiredDistance;
-          if (progress > threshold) currentIndex = 0;
-        }
-
         finalizeSlideState();
       }
-
-      // Prevent click on links if we were dragging
-      const links = heroSection.querySelectorAll('a');
-      links.forEach(link => {
-        link.addEventListener('click', (e) => {
-          if (Math.abs(dragDistance) > 10) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        });
-      });
-
-      heroSection.addEventListener('mousedown', touchStart);
-      heroSection.addEventListener('mousemove', touchMove);
-      heroSection.addEventListener('mouseup', touchEnd);
-      heroSection.addEventListener('mouseleave', () => { if(isDragging) touchEnd() });
-
-      heroSection.addEventListener('touchstart', touchStart, {passive: true});
-      heroSection.addEventListener('touchmove', touchMove, {passive: true});
-      heroSection.addEventListener('touchend', touchEnd);
     });
+  }
+
+  function getPositionX(event) {
+    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+  }
+
+  function updateSlideOpacity(progress) {
+    let opVideo, opContent;
+    if (currentIndex === 0) {
+      opVideo = 1 - progress;
+      opContent = progress;
+    } else {
+      opVideo = progress;
+      opContent = 1 - progress;
+    }
+
+    if (slideVideo) slideVideo.style.opacity = opVideo;
+    if (slideContent) slideContent.style.opacity = opContent;
+  }
+
+  function applyTransitionClasses() {
+    if (slideVideo) slideVideo.classList.add('transition-opacity', 'duration-500', 'ease-in-out');
+    if (slideContent) slideContent.classList.add('transition-opacity', 'duration-500', 'ease-in-out');
+  }
+
+  function removeTransitionClasses() {
+    if (slideVideo) slideVideo.classList.remove('transition-opacity', 'duration-500', 'ease-in-out');
+    if (slideContent) slideContent.classList.remove('transition-opacity', 'duration-500', 'ease-in-out');
+  }
+
+  function finalizeSlideState() {
+    // Remove inline opacity styles so CSS classes take over
+    if (slideVideo) slideVideo.style.opacity = '';
+    if (slideContent) slideContent.style.opacity = '';
+
+    if (currentIndex === 0) {
+      if (slideVideo) {
+        slideVideo.classList.remove('opacity-0', 'pointer-events-none');
+        slideVideo.classList.add('opacity-100', 'pointer-events-auto');
+      }
+      if (slideContent) {
+        slideContent.classList.remove('opacity-100', 'pointer-events-auto', 'lg:opacity-100', 'lg:pointer-events-auto');
+        slideContent.classList.add('opacity-0', 'pointer-events-none', 'lg:opacity-0', 'lg:pointer-events-none');
+      }
+    } else {
+      if (slideVideo) {
+        slideVideo.classList.remove('opacity-100', 'pointer-events-auto');
+        slideVideo.classList.add('opacity-0', 'pointer-events-none');
+      }
+      if (slideContent) {
+        slideContent.classList.remove('opacity-0', 'pointer-events-none', 'lg:opacity-0', 'lg:pointer-events-none');
+        slideContent.classList.add('opacity-100', 'pointer-events-auto', 'lg:opacity-100', 'lg:pointer-events-auto');
+      }
+
+      if (!aosRefreshed) {
+        document.getElementById('hero-text-content').setAttribute('data-aos', 'fade-right');
+        document.getElementById('hero-image-content').setAttribute('data-aos', 'fade-left');
+        if (typeof AOS !== 'undefined') {
+          AOS.refreshHard();
+          aosRefreshed = true;
+        }
+      }
+    }
+  }
+
+  function touchStart(event) {
+    // Prevent default for mouse events to avoid selecting text/images
+    if (event.type.includes('mouse') && event.target.tagName !== 'A' && event.target.tagName !== 'BUTTON') {
+      event.preventDefault();
+    }
+
+    isDragging = true;
+    dragDistance = 0;
+    startX = getPositionX(event);
+
+    removeTransitionClasses();
+    heroSection.classList.add('cursor-grabbing');
+    heroSection.classList.remove('cursor-grab');
+  }
+
+  function touchMove(event) {
+    if (isDragging) {
+      const currentPosition = getPositionX(event);
+      const diff = currentPosition - startX;
+      dragDistance = diff;
+
+      // Calculate progress based on screen width
+      const requiredDistance = Math.min(window.innerWidth / 2, 400);
+
+      let progress = 0;
+      if (currentIndex === 0 && diff < 0) {
+        // Dragging left from video
+        progress = Math.min(1, Math.abs(diff) / requiredDistance);
+      } else if (currentIndex === 1 && diff > 0) {
+        // Dragging right from content
+        progress = Math.min(1, Math.abs(diff) / requiredDistance);
+      }
+
+      if (progress > 0) {
+        updateSlideOpacity(progress);
+      }
+    }
+  }
+
+  function touchEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    applyTransitionClasses();
+    heroSection.classList.remove('cursor-grabbing');
+    heroSection.classList.add('cursor-grab');
+
+    const requiredDistance = Math.min(window.innerWidth / 2, 400);
+    const threshold = 0.25; // 25% to trigger change
+
+    let progress = 0;
+    if (currentIndex === 0 && dragDistance < 0) {
+      progress = Math.abs(dragDistance) / requiredDistance;
+      if (progress > threshold) currentIndex = 1;
+    } else if (currentIndex === 1 && dragDistance > 0) {
+      progress = Math.abs(dragDistance) / requiredDistance;
+      if (progress > threshold) currentIndex = 0;
+    }
+
+    finalizeSlideState();
+  }
+
+  // Prevent click on links if we were dragging
+  const links = heroSection.querySelectorAll('a');
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (Math.abs(dragDistance) > 10) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+  });
+
+  heroSection.addEventListener('mousedown', touchStart);
+  heroSection.addEventListener('mousemove', touchMove);
+  heroSection.addEventListener('mouseup', touchEnd);
+  heroSection.addEventListener('mouseleave', () => { if (isDragging) touchEnd() });
+
+  heroSection.addEventListener('touchstart', touchStart, { passive: true });
+  heroSection.addEventListener('touchmove', touchMove, { passive: true });
+  heroSection.addEventListener('touchend', touchEnd);
+});
