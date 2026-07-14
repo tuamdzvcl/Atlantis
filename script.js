@@ -1170,6 +1170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const videoSrc = isPhone ? "img/0714.mp4" : "img/Video banner trụng bún.mp4";
     heroBannerVideo.innerHTML = `<source src="${videoSrc}" type="video/mp4" />`;
     heroBannerVideo.load();
+    heroBannerVideo.play().catch(e => console.log('Autoplay prevented:', e));
 
     heroBannerVideo.addEventListener('ended', () => {
       if (currentIndex === 0) {
