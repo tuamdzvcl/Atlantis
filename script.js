@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "img/z8019800079076_b7ad02663c5dcf9b4966d7c15c79f87b.jpg",
     "img/z8019800079077_37071f7ae8bff0d7eef93b9d173b6395.jpg",
     "img/z8019800079079_32678d2b747ba83090caced61e348c46.jpg",
-    "img/1021745523526750.mp4",
+
   ];
   let currentImageIndex = 0;
 
