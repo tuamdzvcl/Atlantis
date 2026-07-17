@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Cụ Tạo Link Affiliate Shopee</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 for notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col items-center py-12 px-4 sm:px-6">
+    <div class="max-w-3xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-8 text-white text-center relative overflow-hidden">
+            <div
+                class="absolute -top-24 -right-24 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl pointer-events-none">
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-3 drop-shadow-sm">Tạo Link Shopee Affiliate</h1>
+            <p class="text-orange-100 md:text-lg font-medium">Chuyển đổi link Shopee thường thành link tiếp thị liên kết
+                (Short Link)</p>
+        </div>
+
+        <div class="p-6 md:p-10 space-y-8">
+            <!-- Settings Section -->
+            <div class="bg-orange-50/50 p-5 rounded-2xl border border-orange-100 shadow-sm transition-all">
+                <div class="flex justify-between items-center cursor-pointer select-none" onclick="toggleSettings()">
+                    <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                        <div
+                            class="w-8 h-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center">
+                            <i class="ph-fill ph-gear"></i>
+                        </div>
+                        Cấu hình Open API Shopee
+                    </h2>
+                    <i class="ph-bold ph-caret-down text-gray-500 transition-transform duration-300"
+                        id="settingsIcon"></i>
+                </div>
+
+                <div id="settingsContent" class="space-y-4 hidden mt-5 pt-5 border-t border-orange-100/60">
+                    <div class="text-sm text-gray-600 mb-4 bg-white p-4 rounded-xl border border-gray-100">
+                        <i class="ph-fill ph-info text-orange-500 mr-1"></i> Lấy <strong>App ID</strong> và <strong>App
+                            Secret</strong> từ trang <a href="https://affiliate.shopee.vn/open_api" target="_blank"
+                            class="text-orange-500 hover:text-orange-700 font-semibold underline decoration-orange-300 underline-offset-2">Shopee
+                            Affiliate Dashboard (Open API)</a>. Dữ liệu này được lưu cục bộ trên trình duyệt của bạn,
+                        đảm bảo an toàn.
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">App ID <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="appId"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all"
+                                placeholder="Nhập App ID">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">App Secret <span
+                                    class="text-red-500">*</span></label>
+                            <input type="password" id="appSecret"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all"
+                                placeholder="Nhập App Secret">
+                        </div>
+                    </div>
+                    <div class="flex justify-end pt-2">
+                        <button onclick="saveSettings()"
+                            class="bg-gray-800 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-gray-900 hover:shadow-lg transition-all flex items-center gap-2">
+                            <i class="ph-bold ph-floppy-disk"></i> Lưu cấu hình
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Section -->
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5 flex justify-between">
+                        <span>Link Shopee gốc <span class="text-red-500">*</span></span>
+                        <span onclick="document.getElementById('originalUrl').value=''"
+                            class="text-xs text-gray-400 hover:text-orange-500 cursor-pointer flex items-center gap-1"><i
+                                class="ph-bold ph-x-circle"></i> Xóa</span>
+                    </label>
+                    <textarea id="originalUrl" rows="3"
+                        class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 outline-none resize-none transition-all shadow-sm"
+                        placeholder="Dán link Shopee của sản phẩm vào đây... (Ví dụ: https://shopee.vn/product/...)"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Sub ID <span
+                            class="text-gray-400 font-normal">(Tuỳ chọn - dùng để tracking chiến dịch)</span></label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="ph-bold ph-tag text-gray-400"></i>
+                        </div>
+                        <input type="text" id="subId"
+                            class="w-full border border-gray-300 rounded-xl pl-10 pr-4 py-3 focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all shadow-sm"
+                            placeholder="Ví dụ: facebook_post_1, tiktok_bio, ...">
+                    </div>
+                </div>
+
+                <button onclick="generateLink()" id="generateBtn"
+                    class="w-full bg-orange-500 text-white font-bold text-lg py-4 rounded-2xl hover:bg-orange-600 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/30 transition-all duration-300 flex items-center justify-center gap-2 mt-4">
+                    <i class="ph-bold ph-link text-xl"></i> TẠO LINK AFFILIATE NGAY
+                </button>
+            </div>
+
+            <!-- Output Section -->
+            <div id="outputSection" class="hidden mt-8 pt-8 border-t border-gray-100 animate-fade-in-up">
+                <label class="block text-sm font-bold text-green-600 mb-2 flex items-center gap-2">
+                    <i class="ph-fill ph-check-circle text-xl"></i> Link Affiliate của bạn đã sẵn sàng!
+                </label>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="shortLinkResult" readonly
+                        class="w-full bg-green-50 border-2 border-green-200 text-green-800 rounded-xl px-5 py-4 font-semibold outline-none focus:border-green-400 transition-colors">
+                    <button onclick="copyLink()"
+                        class="bg-green-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-700 hover:shadow-lg hover:shadow-green-500/30 transition-all flex items-center justify-center gap-2 shrink-0">
+                        <i class="ph-bold ph-copy text-xl"></i> Copy Link
+                    </button>
+                </div>
+            </div>
+
+            <div id="apiInfoSection" class="mt-8 text-xs text-gray-400 text-center bg-gray-50 p-4 rounded-xl">
+                Lưu ý: Công cụ này gửi request trực tiếp đến Shopee Open API từ trình duyệt. Nếu gặp lỗi CORS
+                (Cross-Origin Resource Sharing), bạn cần cấu hình một Backend Proxy hoặc extension chặn CORS để sử dụng
+                nội bộ.
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Decoration -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-orange-200/40 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 -left-40 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl"></div>
+    </div>
+
+    <script>
+        // Tailwin CSS Animation config via JS injection
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.4s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+
+        // Accordion for settings
+        function toggleSettings() {
+            const content = document.getElementById('settingsContent');
+            const icon = document.getElementById('settingsIcon');
+            content.classList.toggle('hidden');
+            if (content.classList.contains('hidden')) {
+                icon.classList.remove('rotate-180');
+            } else {
+                icon.classList.add('rotate-180');
+            }
+        }
+
+        // Init Load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedAppId = localStorage.getItem('shopee_app_id');
+            const savedAppSecret = localStorage.getItem('shopee_app_secret');
+            if (savedAppId) document.getElementById('appId').value = savedAppId;
+            if (savedAppSecret) document.getElementById('appSecret').value = savedAppSecret;
+
+            if (!savedAppId || !savedAppSecret) {
+                toggleSettings(); // Auto open if no config
+            }
+        });
+
+        // Save to localStorage
+        function saveSettings() {
+            const appId = document.getElementById('appId').value.trim();
+            const appSecret = document.getElementById('appSecret').value.trim();
+
+            if (!appId || !appSecret) {
+                Swal.fire({ icon: 'warning', title: 'Thiếu thông tin', text: 'Vui lòng nhập đầy đủ App ID và App Secret' });
+                return;
+            }
+
+            localStorage.setItem('shopee_app_id', appId);
+            localStorage.setItem('shopee_app_secret', appSecret);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công',
+                text: 'Đã lưu cấu hình API',
+                timer: 1500,
+                showConfirmButton: false,
+                backdrop: `rgba(0,0,0,0.4)`
+            });
+            toggleSettings();
+        }
+
+        // Generate HMAC SHA256 Signature
+        async function generateSignature(appId, appSecret, payload, timestamp) {
+            const encoder = new TextEncoder();
+            // Typically Shopee signature base string format: appId + timestamp + payload
+            // Please adjust the concatenation order if Shopee docs specify differently.
+            const message = appId + timestamp + payload;
+
+            const keyData = encoder.encode(appSecret);
+            const cryptoKey = await crypto.subtle.importKey(
+                'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+            );
+            const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(message));
+            const signatureArray = Array.from(new Uint8Array(signatureBuffer));
+            return signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Main action
+        async function generateLink() {
+            const appId = localStorage.getItem('shopee_app_id');
+            const appSecret = localStorage.getItem('shopee_app_secret');
+            const originUrl = document.getElementById('originalUrl').value.trim();
+            const subId = document.getElementById('subId').value.trim();
+
+            if (!appId || !appSecret) {
+                Swal.fire('Lỗi', 'Vui lòng mở phần Cấu hình API và nhập App ID, App Secret trước', 'error');
+                if (document.getElementById('settingsContent').classList.contains('hidden')) toggleSettings();
+                return;
+            }
+
+            if (!originUrl) {
+                Swal.fire('Thiếu thông tin', 'Vui lòng dán link Shopee gốc cần chuyển đổi', 'warning');
+                document.getElementById('originalUrl').focus();
+                return;
+            }
+
+            const btn = document.getElementById('generateBtn');
+            const originalBtnHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-xl"></i> ĐANG TẠO LINK...';
+            btn.disabled = true;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+
+            document.getElementById('outputSection').classList.add('hidden');
+
+            try {
+                const timestamp = Math.floor(Date.now() / 1000).toString();
+
+                // GraphQL Payload
+                let subIdsString = '';
+                if (subId) {
+                    subIdsString = `, subIds: ["${subId.replace(/"/g, '')}"]`; // Simple escaping
+                }
+
+                // Note: Shopee GraphQL Mutation format
+                const graphqlQuery = `mutation { generateShortLink(input: { originUrl: "${originUrl}"${subIdsString} }) { shortLink } }`;
+                const payloadObj = { query: graphqlQuery };
+                const payloadStr = JSON.stringify(payloadObj);
+
+                const signature = await generateSignature(appId, appSecret, payloadStr, timestamp);
+
+                const apiUrl = 'https://open-api.affiliate.shopee.vn/graphql';
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `SHA256 ${signature}`,
+                        'X-Shopee-AppId': appId,
+                        'X-Shopee-Timestamp': timestamp
+                    },
+                    body: payloadStr
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status} - Có thể API không hỗ trợ gọi trực tiếp từ trình duyệt (CORS) hoặc sai thông tin xác thực.`);
+                }
+
+                const result = await response.json();
+
+                if (result.errors && result.errors.length > 0) {
+                    throw new Error(result.errors[0].message || 'Lỗi không xác định từ API Shopee');
+                }
+
+                if (!result.data || !result.data.generateShortLink || !result.data.generateShortLink.shortLink) {
+                    throw new Error('API không trả về shortLink. Có thể link gốc không hợp lệ hoặc cấu hình API sai.');
+                }
+
+                const shortLink = result.data.generateShortLink.shortLink;
+
+                document.getElementById('shortLinkResult').value = shortLink;
+                document.getElementById('outputSection').classList.remove('hidden');
+
+            } catch (error) {
+                console.error("Lỗi tạo link:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tạo link thất bại',
+                    text: error.message || 'Không thể kết nối đến Shopee API. Xem Console (F12) để biết chi tiết.',
+                    confirmButtonColor: '#f97316'
+                });
+            } finally {
+                btn.innerHTML = originalBtnHtml;
+                btn.disabled = false;
+                btn.classList.remove('opacity-80', 'cursor-not-allowed');
+            }
+        }
+
+        // Copy action
+        function copyLink() {
+            const linkInput = document.getElementById('shortLinkResult');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999); // For mobile devices
+            navigator.clipboard.writeText(linkInput.value).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đã copy link!',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    customClass: {
+                        popup: 'colored-toast'
+                    }
+                });
+            }).catch(err => {
+                // Fallback for older browsers
+                document.execCommand('copy');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đã copy link!',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
