@@ -235,7 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "img/z8019800079076_b7ad02663c5dcf9b4966d7c15c79f87b.jpg",
     "img/z8019800079077_37071f7ae8bff0d7eef93b9d173b6395.jpg",
     "img/z8019800079079_32678d2b747ba83090caced61e348c46.jpg",
-
   ];
   let currentImageIndex = 0;
 
@@ -248,14 +247,16 @@ document.addEventListener("DOMContentLoaded", () => {
       thumbnailsContainer.innerHTML = productImages
         .map(
           (src, i) => `
-              <button onclick="changeMainImage(${i})" class="w-14 h-14 rounded-lg border-2 overflow-hidden shrink-0 product-thumb transition-all ${i === 0
+              <button onclick="changeMainImage(${i})" class="w-14 h-14 rounded-lg border-2 overflow-hidden shrink-0 product-thumb transition-all ${
+            i === 0
               ? "border-primary"
               : "border-transparent opacity-70 hover:opacity-100 hover:border-gray-300"
-            }">
-          ${src.endsWith(".mp4")
+          }">
+          ${
+            src.endsWith(".mp4")
               ? `<video muted playsinline preload="metadata" src="${src}" class="w-full h-full object-cover"><source src="${src}" type="video/mp4"></video>`
               : `<img src="${src}" class="w-full h-full object-cover" />`
-            }
+          }
               </button>
           `
         )
@@ -322,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
           playPromise.catch(() => {
             // Nếu bị chặn, tự động chuyển sang tắt tiếng để vẫn chạy được
             video.muted = true;
-            video.play().catch(() => { });
+            video.play().catch(() => {});
           });
         }
       }
@@ -345,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (playPromise !== undefined) {
             playPromise.catch(() => {
               mediaEl.muted = true;
-              mediaEl.play().catch(() => { });
+              mediaEl.play().catch(() => {});
             });
           }
         }
@@ -372,14 +373,16 @@ document.addEventListener("DOMContentLoaded", () => {
       lightboxThumbnailsContainer.innerHTML = productImages
         .map(
           (src, i) => `
-                <button onclick="updateLightboxImage(event, ${i})" class="w-14 h-14 md:w-20 md:h-20 shrink-0 border-2 rounded-lg overflow-hidden transition-all ${i === currentImageIndex
+                <button onclick="updateLightboxImage(event, ${i})" class="w-14 h-14 md:w-20 md:h-20 shrink-0 border-2 rounded-lg overflow-hidden transition-all ${
+            i === currentImageIndex
               ? "border-primary"
               : "border-transparent opacity-50 hover:opacity-100"
-            }">
-                   ${src.endsWith(".mp4")
-              ? `<video muted playsinline preload="metadata" src="${src}" class="w-full h-full object-cover"><source src="${src}" type="video/mp4"></video>`
-              : `<img src="${src}" class="w-full h-full object-cover" />`
-            }
+          }">
+                   ${
+                     src.endsWith(".mp4")
+                       ? `<video muted playsinline preload="metadata" src="${src}" class="w-full h-full object-cover"><source src="${src}" type="video/mp4"></video>`
+                       : `<img src="${src}" class="w-full h-full object-cover" />`
+                   }
                 </button>
             `
         )
@@ -865,35 +868,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- EXIT INTENT VOUCHER LOGIC ---
-  window.addEventListener('beforeunload', () => {
-    sessionStorage.removeItem('voucherShown');
-    sessionStorage.removeItem('hasVoucher');
+  window.addEventListener("beforeunload", () => {
+    sessionStorage.removeItem("voucherShown");
+    sessionStorage.removeItem("hasVoucher");
   });
 
   const showExitIntentPopup = () => {
-    if (sessionStorage.getItem('voucherShown') || sessionStorage.getItem('hasVoucher')) {
+    if (
+      sessionStorage.getItem("voucherShown") ||
+      sessionStorage.getItem("hasVoucher")
+    ) {
       return;
     }
-    sessionStorage.setItem('voucherShown', 'true');
+    sessionStorage.setItem("voucherShown", "true");
 
     Swal.fire({
-      title: 'Khoan đã! Đừng vội rời đi!',
-      text: 'Bạn sẽ bỏ lỡ cơ hội nhận Voucher giảm giá 200.000đ cho đơn hàng hôm nay.',
-      icon: 'warning',
+      title: "Khoan đã! Đừng vội rời đi!",
+      text: "Bạn sẽ bỏ lỡ cơ hội nhận Voucher giảm giá 200.000đ cho đơn hàng hôm nay.",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#0078D4',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Nhận Voucher 200k',
-      cancelButtonText: 'Không, tôi muốn thoát'
+      confirmButtonColor: "#0078D4",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Nhận Voucher 200k",
+      cancelButtonText: "Không, tôi muốn thoát",
     }).then((result) => {
       if (result.isConfirmed) {
-        sessionStorage.setItem('hasVoucher', 'true');
+        sessionStorage.setItem("hasVoucher", "true");
         checkVoucherStatus();
 
         // 1. Dùng Toast (thông báo nhỏ góc phải) thay vì popup lớn để không khóa màn hình
         Toast.fire({
-          icon: 'success',
-          title: 'Đã nhận Voucher 200k!',
+          icon: "success",
+          title: "Đã nhận Voucher 200k!",
         });
 
         // 2. Buộc đóng popup hiện tại ngay lập tức để mở khóa cuộn trang
@@ -904,7 +910,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const dathangSection = document.getElementById("dathang");
           if (dathangSection) {
             // Tính toán vị trí trừ đi 80px của thanh header (menu dính bên trên)
-            const y = dathangSection.getBoundingClientRect().top + window.scrollY - 80;
+            const y =
+              dathangSection.getBoundingClientRect().top + window.scrollY - 80;
             window.scrollTo({ top: y, behavior: "smooth" });
           }
         }, 300); // Tăng delay lên 300ms để đảm bảo trình duyệt đã kết thúc sự kiện popstate
@@ -914,8 +921,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const checkVoucherStatus = () => {
     const voucherContainer = document.getElementById("voucherContainer");
-    if (sessionStorage.getItem('hasVoucher') === 'true' && voucherContainer) {
-      voucherContainer.classList.remove('hidden');
+    if (sessionStorage.getItem("hasVoucher") === "true" && voucherContainer) {
+      voucherContainer.classList.remove("hidden");
     }
   };
 
@@ -937,25 +944,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       Swal.fire({
-        icon: 'success',
-        title: 'Đã áp dụng Voucher!',
-        text: 'Voucher 200.000đ đã được thêm vào đơn hàng. Chuyên viên sẽ giảm trừ trực tiếp khi gọi xác nhận.'
+        icon: "success",
+        title: "Đã áp dụng Voucher!",
+        text: "Voucher 200.000đ đã được thêm vào đơn hàng. Chuyên viên sẽ giảm trừ trực tiếp khi gọi xác nhận.",
       });
     });
   }
 
   // Detect exit on desktop
 
-
   // Detect exit on mobile (back button trap)
   if (window.history && window.history.pushState) {
-    window.history.pushState('forward', null, '');
-    window.addEventListener('popstate', (e) => {
-      if (!sessionStorage.getItem('voucherShown')) {
+    window.history.pushState("forward", null, "");
+    window.addEventListener("popstate", (e) => {
+      if (!sessionStorage.getItem("voucherShown")) {
         console.log("test");
 
         showExitIntentPopup();
-        window.history.pushState('forward', null, ''); // Trap again
+        window.history.pushState("forward", null, ""); // Trap again
       }
     });
   }
@@ -1036,8 +1042,9 @@ window.renderProductFromAPI = (data) => {
 
         <!-- Main Image -->
         <div class="relative w-full h-64 md:h-80 flex justify-center items-center group cursor-pointer" onclick="openLightbox()">
-          <img id="mainProductImage" src="./img/trungbun2rovabat.png" alt="${data.name
-    }" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-300" />
+          <img id="mainProductImage" src="./img/trungbun2rovabat.png" alt="${
+            data.name
+          }" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-300" />
           <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
             <div class="bg-white/80 w-12 h-12 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm">
               <i class="ph-bold ph-magnifying-glass-plus text-2xl text-primary"></i>
@@ -1052,71 +1059,79 @@ window.renderProductFromAPI = (data) => {
       </div>
       
       <div class="p-4 md:p-8 md:w-1/2 flex flex-col justify-center">
-        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">${data.name
-    }</h3>
+        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">${
+          data.name
+        }</h3>
         
         <div class="flex items-center gap-1.5 md:gap-3 mb-4 text-[11px] sm:text-lg md:text-sm whitespace-nowrap">
           <div class="flex text-yellow-400">
             <i class="ph-fill ph-star"></i>
           </div>
           <div class="text-gray-500 border-l border-gray-300 pl-1.5 md:pl-3">
-            <span class="font-medium text-gray-900">${data.rating}/5</span> (${data.reviewsCount
-    } đánh giá)
+            <span class="font-medium text-gray-900">${data.rating}/5</span> (${
+    data.reviewsCount
+  } đánh giá)
           </div>
           <i class="ph-bold ph-shopping-cart text-sm md:text-xl ml-0.5 md:ml-0"></i>
           <div class="text-gray-500 border-l border-gray-300 pl-1.5 md:pl-3">
-            Đã bán <span class="font-medium text-gray-900">${data.soldCount
-    }</span>
+            Đã bán <span class="font-medium text-gray-900">${
+              data.soldCount
+            }</span>
           </div>
         </div>
 
         <div class="flex gap-1.5 md:gap-3 mb-6 items-end whitespace-nowrap">
           <span id="currentPrice" class="text-2xl md:text-3xl font-bold text-accent leading-none">${defaultMaterial.price.toLocaleString(
-      "vi-VN"
-    )}₫</span>
+            "vi-VN"
+          )}₫</span>
           <span id="originalPrice" class="text-gray-400 line-through text-sm md:text-lg mb-0.5 md:mb-1 leading-none">${defaultMaterial.originalPrice.toLocaleString(
-      "vi-VN"
-    )}₫</span>
-          <span id="discountBadge" class="bg-red-100 text-red-600 text-[10px] md:text-xs font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded mb-0.5 md:mb-2 leading-none">-${defaultMaterial.discount
-    }%</span>
+            "vi-VN"
+          )}₫</span>
+          <span id="discountBadge" class="bg-red-100 text-red-600 text-[10px] md:text-xs font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded mb-0.5 md:mb-2 leading-none">-${
+            defaultMaterial.discount
+          }%</span>
         </div>
 
         <div class="mb-6">
           <h4 class="text-sm font-semibold text-gray-900 mb-3">Chọn chất liệu:</h4>
           <div class="flex gap-3">
             ${data.materials
-      .map(
-        (mat, index) => `
+              .map(
+                (mat, index) => `
               <label class="cursor-pointer relative flex-1">
-                <input type="radio" name="material" value="${mat.id
-          }" class="peer sr-only" ${index === 0 ? "checked" : ""
-          } onchange="updatePrice('${mat.id}')">
+                <input type="radio" name="material" value="${
+                  mat.id
+                }" class="peer sr-only" ${
+                  index === 0 ? "checked" : ""
+                } onchange="updatePrice('${mat.id}')">
                 <div class="px-3 py-2 border-2 border-gray-200 rounded-lg peer-checked:border-primary peer-checked:bg-blue-50 hover:border-primary/50 transition-all text-center h-full flex flex-col justify-center">
-                  <div class="font-bold text-gray-900 peer-checked:text-primary">${mat.name
-          }</div>
+                  <div class="font-bold text-gray-900 peer-checked:text-primary">${
+                    mat.name
+                  }</div>
                   <div class="text-xs text-gray-500">${mat.desc}</div>
                 </div>
-                ${mat.isHot
-            ? '<div class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm border border-white">HOT</div>'
-            : ""
-          }
+                ${
+                  mat.isHot
+                    ? '<div class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm border border-white">HOT</div>'
+                    : ""
+                }
               </label>
             `
-      )
-      .join("")}
+              )
+              .join("")}
           </div>
         </div>
 
         <div class="mb-8 space-y-3 text-base text-gray-600 flex-1">
           ${data.features
-      .map(
-        (f) => `
+            .map(
+              (f) => `
             <p class="flex items-center gap-2">
               <i class="ph-fill ph-check-circle text-green-500"></i> ${f}
             </p>
           `
-      )
-      .join("")}
+            )
+            .join("")}
         </div>
         
         <div class="grid grid-cols-2 gap-4 mt-auto">
@@ -1167,12 +1182,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (heroBannerVideo) {
     // Tự động chọn video dọc hoặc ngang tùy theo màn hình lúc load
     const isPhone = window.innerWidth < 768;
-    const videoSrc = isPhone ? "img/0714.mp4" : "img/Video banner trụng bún.mp4";
+    const videoSrc = isPhone ? "img/0714.mp4" : "img/videobanner.mp4";
     heroBannerVideo.innerHTML = `<source src="${videoSrc}" type="video/mp4" />`;
     heroBannerVideo.load();
-    heroBannerVideo.play().catch(e => console.log('Autoplay prevented:', e));
+    heroBannerVideo.play().catch((e) => console.log("Autoplay prevented:", e));
 
-    heroBannerVideo.addEventListener('ended', () => {
+    heroBannerVideo.addEventListener("ended", () => {
       if (currentIndex === 0) {
         currentIndex = 1;
         applyTransitionClasses();
@@ -1182,7 +1197,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getPositionX(event) {
-    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+    return event.type.includes("mouse")
+      ? event.pageX
+      : event.touches[0].clientX;
   }
 
   function updateSlideOpacity(progress) {
@@ -1200,43 +1217,87 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function applyTransitionClasses() {
-    if (slideVideo) slideVideo.classList.add('transition-opacity', 'duration-500', 'ease-in-out');
-    if (slideContent) slideContent.classList.add('transition-opacity', 'duration-500', 'ease-in-out');
+    if (slideVideo)
+      slideVideo.classList.add(
+        "transition-opacity",
+        "duration-500",
+        "ease-in-out"
+      );
+    if (slideContent)
+      slideContent.classList.add(
+        "transition-opacity",
+        "duration-500",
+        "ease-in-out"
+      );
   }
 
   function removeTransitionClasses() {
-    if (slideVideo) slideVideo.classList.remove('transition-opacity', 'duration-500', 'ease-in-out');
-    if (slideContent) slideContent.classList.remove('transition-opacity', 'duration-500', 'ease-in-out');
+    if (slideVideo)
+      slideVideo.classList.remove(
+        "transition-opacity",
+        "duration-500",
+        "ease-in-out"
+      );
+    if (slideContent)
+      slideContent.classList.remove(
+        "transition-opacity",
+        "duration-500",
+        "ease-in-out"
+      );
   }
 
   function finalizeSlideState() {
     // Remove inline opacity styles so CSS classes take over
-    if (slideVideo) slideVideo.style.opacity = '';
-    if (slideContent) slideContent.style.opacity = '';
+    if (slideVideo) slideVideo.style.opacity = "";
+    if (slideContent) slideContent.style.opacity = "";
 
     if (currentIndex === 0) {
       if (slideVideo) {
-        slideVideo.classList.remove('opacity-0', 'pointer-events-none');
-        slideVideo.classList.add('opacity-100', 'pointer-events-auto');
+        slideVideo.classList.remove("opacity-0", "pointer-events-none");
+        slideVideo.classList.add("opacity-100", "pointer-events-auto");
       }
       if (slideContent) {
-        slideContent.classList.remove('opacity-100', 'pointer-events-auto', 'lg:opacity-100', 'lg:pointer-events-auto');
-        slideContent.classList.add('opacity-0', 'pointer-events-none', 'lg:opacity-0', 'lg:pointer-events-none');
+        slideContent.classList.remove(
+          "opacity-100",
+          "pointer-events-auto",
+          "lg:opacity-100",
+          "lg:pointer-events-auto"
+        );
+        slideContent.classList.add(
+          "opacity-0",
+          "pointer-events-none",
+          "lg:opacity-0",
+          "lg:pointer-events-none"
+        );
       }
     } else {
       if (slideVideo) {
-        slideVideo.classList.remove('opacity-100', 'pointer-events-auto');
-        slideVideo.classList.add('opacity-0', 'pointer-events-none');
+        slideVideo.classList.remove("opacity-100", "pointer-events-auto");
+        slideVideo.classList.add("opacity-0", "pointer-events-none");
       }
       if (slideContent) {
-        slideContent.classList.remove('opacity-0', 'pointer-events-none', 'lg:opacity-0', 'lg:pointer-events-none');
-        slideContent.classList.add('opacity-100', 'pointer-events-auto', 'lg:opacity-100', 'lg:pointer-events-auto');
+        slideContent.classList.remove(
+          "opacity-0",
+          "pointer-events-none",
+          "lg:opacity-0",
+          "lg:pointer-events-none"
+        );
+        slideContent.classList.add(
+          "opacity-100",
+          "pointer-events-auto",
+          "lg:opacity-100",
+          "lg:pointer-events-auto"
+        );
       }
 
       if (!aosRefreshed) {
-        document.getElementById('hero-text-content').setAttribute('data-aos', 'fade-right');
-        document.getElementById('hero-image-content').setAttribute('data-aos', 'fade-left');
-        if (typeof AOS !== 'undefined') {
+        document
+          .getElementById("hero-text-content")
+          .setAttribute("data-aos", "fade-right");
+        document
+          .getElementById("hero-image-content")
+          .setAttribute("data-aos", "fade-left");
+        if (typeof AOS !== "undefined") {
           AOS.refreshHard();
           aosRefreshed = true;
         }
@@ -1246,7 +1307,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function touchStart(event) {
     // Prevent default for mouse events to avoid selecting text/images
-    if (event.type.includes('mouse') && event.target.tagName !== 'A' && event.target.tagName !== 'BUTTON') {
+    if (
+      event.type.includes("mouse") &&
+      event.target.tagName !== "A" &&
+      event.target.tagName !== "BUTTON"
+    ) {
       event.preventDefault();
     }
 
@@ -1255,8 +1320,8 @@ document.addEventListener("DOMContentLoaded", () => {
     startX = getPositionX(event);
 
     removeTransitionClasses();
-    heroSection.classList.add('cursor-grabbing');
-    heroSection.classList.remove('cursor-grab');
+    heroSection.classList.add("cursor-grabbing");
+    heroSection.classList.remove("cursor-grab");
   }
 
   function touchMove(event) {
@@ -1288,8 +1353,8 @@ document.addEventListener("DOMContentLoaded", () => {
     isDragging = false;
 
     applyTransitionClasses();
-    heroSection.classList.remove('cursor-grabbing');
-    heroSection.classList.add('cursor-grab');
+    heroSection.classList.remove("cursor-grabbing");
+    heroSection.classList.add("cursor-grab");
 
     const requiredDistance = Math.min(window.innerWidth / 2, 400);
     const threshold = 0.25; // 25% to trigger change
@@ -1307,9 +1372,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Prevent click on links if we were dragging
-  const links = heroSection.querySelectorAll('a');
-  links.forEach(link => {
-    link.addEventListener('click', (e) => {
+  const links = heroSection.querySelectorAll("a");
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
       if (Math.abs(dragDistance) > 10) {
         e.preventDefault();
         e.stopPropagation();
@@ -1317,12 +1382,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  heroSection.addEventListener('mousedown', touchStart);
-  heroSection.addEventListener('mousemove', touchMove);
-  heroSection.addEventListener('mouseup', touchEnd);
-  heroSection.addEventListener('mouseleave', () => { if (isDragging) touchEnd() });
+  heroSection.addEventListener("mousedown", touchStart);
+  heroSection.addEventListener("mousemove", touchMove);
+  heroSection.addEventListener("mouseup", touchEnd);
+  heroSection.addEventListener("mouseleave", () => {
+    if (isDragging) touchEnd();
+  });
 
-  heroSection.addEventListener('touchstart', touchStart, { passive: true });
-  heroSection.addEventListener('touchmove', touchMove, { passive: true });
-  heroSection.addEventListener('touchend', touchEnd);
+  heroSection.addEventListener("touchstart", touchStart, { passive: true });
+  heroSection.addEventListener("touchmove", touchMove, { passive: true });
+  heroSection.addEventListener("touchend", touchEnd);
 });
