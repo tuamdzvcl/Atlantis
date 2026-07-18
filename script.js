@@ -1182,7 +1182,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (heroBannerVideo) {
     // Tự động chọn video dọc hoặc ngang tùy theo màn hình lúc load
     const isPhone = window.innerWidth < 768;
-    const videoSrc = isPhone ? "img/0714.mp4" : "img/videobanner.mp4";
+    const videoSrc = isPhone
+      ? "img/0714.mp4"
+      : "img/644820005_1470057721191269_2176235959883969926_n.jpg";
     heroBannerVideo.innerHTML = `<source src="${videoSrc}" type="video/mp4" />`;
     heroBannerVideo.load();
     heroBannerVideo.play().catch((e) => console.log("Autoplay prevented:", e));
