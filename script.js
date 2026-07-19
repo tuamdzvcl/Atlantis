@@ -853,17 +853,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
       isSubmittingOrder = false;
 
-      Swal.fire({
-        icon: "success",
-        title: "Đặt hàng thành công!",
-        text: "Đội ngũ Atlantis sẽ sớm liên hệ để xác nhận đơn hàng.",
-      });
+      // Gửi sự kiện Purchase lên Facebook Pixel để tracking chuyển đổi
+      if (typeof fbq === "function") {
+        fbq("track", "Purchase", {
+          value: 0,
+          currency: "VND",
+          content_name: "Bếp Trụng Đa Năng Atlantis",
+        });
+      }
 
       orderForm.reset();
       setTrackingFields();
 
       submitOrderBtn.disabled = false;
       submitOrderBtn.innerText = "HOÀN TẤT ĐẶT HÀNG";
+
+      // Hiện popup cảm ơn tại trang, sau đó chuyển hướng
+      Swal.fire({
+        icon: "success",
+        title: "Đặt hàng thành công!",
+        html: "Cảm ơn bạn đã đặt hàng!<br>Đội ngũ Atlantis sẽ sớm liên hệ để xác nhận đơn hàng.",
+        confirmButtonText: "Xác nhận",
+        confirmButtonColor: "#0078D4",
+        allowOutsideClick: false,
+      }).then(() => {
+        window.location.href = "./camon/";
+      });
     });
   }
 
