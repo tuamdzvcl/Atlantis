@@ -985,10 +985,9 @@ document.addEventListener("DOMContentLoaded", () => {
         voucherInput.value = "GIAM200K"; // Sends to Google Sheets
       }
 
-      Swal.fire({
+      Toast.fire({
         icon: "success",
-        title: "Đã áp dụng Voucher!",
-        text: "Voucher 200.000đ đã được thêm vào đơn hàng. Chuyên viên sẽ giảm trừ trực tiếp khi gọi xác nhận.",
+        title: "Đã áp dụng Voucher 200K!",
       });
     });
   }
