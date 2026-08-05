@@ -1,0 +1,96 @@
+/* ======================================================
+   Promo Popup - Custom CSS
+   Chứa các keyframes animation và pseudo-element 
+   không thể tạo bằng Tailwind utility classes.
+   Các class còn lại đều dùng Tailwind trong HTML.
+   ====================================================== */
+
+/* --- Keyframes --- */
+@keyframes promoSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes promoFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes promoShine {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+@keyframes promoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes promoConfetti {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* --- Overlay backdrop blur --- */
+#promoPopupOverlay {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* --- Animation trigger classes --- */
+#promoPopupOverlay.promo-visible {
+  animation: promoFadeIn 0.3s ease-out forwards;
+}
+
+#promoPopupContent.promo-visible {
+  animation: promoSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- CTA shine sweep effect --- */
+.promo-cta-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.promo-cta-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: promoShine 2.5s ease-in-out infinite;
+}
+
+/* --- Floating badge --- */
+.promo-badge-float {
+  animation: promoFloat 3s ease-in-out infinite;
+}
+
+/* --- Confetti particles --- */
+.promo-confetti-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  animation: promoConfetti 2.5s ease-out forwards;
+  pointer-events: none;
+}
