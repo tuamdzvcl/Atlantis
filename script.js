@@ -231,10 +231,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const productImages = [
     "./img/z7345484422385_cc140105b9589e0f9cfadc51e8cb4d4c-Recovered.jpg",
     "https://trungbunatlantis.store/wp-content/uploads/2026/05/Untitled-1.jpg",
-    "img/z8019800062555_272a80831c1cb3ac8737d5b38051fefe.jpg",
+    "img/1786503680088_684565182863214233_684565182863214233_33aa66cf1ff4d8d4688e8f7e36f12af4.jpg",
     "img/z8019800079076_b7ad02663c5dcf9b4966d7c15c79f87b.jpg",
     "img/z8019800079077_37071f7ae8bff0d7eef93b9d173b6395.jpg",
-    "img/z8019800079079_32678d2b747ba83090caced61e348c46.jpg",
+    
     "img/image-1986462198676191.jpg",
   ];
   let currentImageIndex = 0;
