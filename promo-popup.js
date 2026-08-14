@@ -1,9 +1,9 @@
 /**
  * ======================================================
  * Promo Popup - JavaScript
- * Hiện popup ưu đãi sau 4 giây khi vào trang.
+ * Hiện popup ưu đãi khi khách hàng cuộn đến phần đặt hàng (#banggia).
  * Chỉ hiện 1 lần / session (sessionStorage).
- * CTA: đóng popup → cuộn xuống mục Đặt Hàng (#dathang).
+ * CTA: đóng popup → cuộn xuống mục Đặt Hàng (#banggia).
  * ======================================================
  */
 (function () {
@@ -15,6 +15,14 @@
   const closeBtn = document.getElementById("promoCloseBtn");
   const ctaBtn = document.getElementById("promoCTABtn");
   const confettiContainer = document.getElementById("promoConfettiContainer");
+  const continueBtn = document.getElementById("promoContinueBtn");
+
+  // New Form Elements
+  const defaultView = document.getElementById("promoDefaultView");
+  const leadForm = document.getElementById("promoLeadForm");
+  const successView = document.getElementById("promoSuccessView");
+  const submitText = document.getElementById("promoSubmitText");
+  const submitLoading = document.getElementById("promoSubmitLoading");
 
   // Bail out if popup elements not found
   if (!overlay || !content) return;
@@ -95,8 +103,20 @@
     }, 300);
   }
 
-  // --- Auto show after 4 seconds ---
-  setTimeout(openPromo, 4000);
+  // --- Show when scrolling to order section (#banggia) ---
+  const orderSection = document.getElementById("banggia");
+  if (orderSection) {
+    const observer = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        openPromo();
+        observer.disconnect(); // Stop observing once shown
+      }
+    }, { threshold: 0.2 }); // Trigger when 20% of the section is visible
+    observer.observe(orderSection);
+  } else {
+    // Fallback if section is missing
+    setTimeout(openPromo, 2000);
+  }
 
   // --- Event Listeners ---
 
@@ -108,18 +128,72 @@
     if (e.target === overlay) closePromo();
   });
 
-  // CTA: close popup → scroll to order form (#dathang)
+  // CTA: Show the form instead of scrolling
   ctaBtn.addEventListener("click", function () {
-    closePromo();
-
-    // Wait for close animation to finish, then smooth scroll
-    setTimeout(function () {
-      const orderSection = document.getElementById("banggia");
-      if (orderSection) {
-        orderSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }, 350);
+    if (defaultView && leadForm) {
+      defaultView.classList.add("hidden");
+      leadForm.classList.remove("hidden");
+      // Focus on the first input
+      const firstInput = leadForm.querySelector("input");
+      if (firstInput) firstInput.focus();
+    }
   });
+
+  // Handle Continue Shopping Button (Scroll to order section)
+  if (continueBtn) {
+    continueBtn.addEventListener("click", function () {
+      closePromo();
+
+      // Wait for close animation to finish, then smooth scroll
+      setTimeout(function () {
+        const orderSection = document.getElementById("banggia");
+        if (orderSection) {
+          orderSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 350);
+    });
+  }
+
+  // Handle Form Submission
+  if (leadForm) {
+    leadForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Update UI to loading state
+      if (submitText) submitText.classList.add("opacity-0");
+      if (submitLoading) submitLoading.classList.remove("hidden");
+      const submitBtn = document.getElementById("promoSubmitBtn");
+      if (submitBtn) submitBtn.disabled = true;
+
+      const formData = new FormData(leadForm);
+      // Save data to sessionStorage for the order popup later
+      sessionStorage.setItem("promoName", formData.get("entry.name"));
+      sessionStorage.setItem("promoPhone", formData.get("entry.phone"));
+      sessionStorage.setItem("promoVoucher", "VCH100K");
+
+      // Replace with your deployed Google Apps Script Web App URL
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhwaoU3edRdu2rtGT-NbYgMeykMwZGWP46SdmvfKCJ1YiML4M-gFZRhKIBCwcgBrrg/exec";
+
+      // Gửi request ngầm, không chờ kết quả
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+      }).catch(error => console.error('Error!', error.message));
+
+      // Bắt buộc hiển thị thành công sau 2s
+      setTimeout(() => {
+        leadForm.classList.add("hidden");
+        if (successView) successView.classList.remove("hidden");
+        createConfetti(); // Trigger confetti again for success!
+        
+        // Reset button state
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitText) submitText.classList.remove("opacity-0");
+        if (submitLoading) submitLoading.classList.add("hidden");
+      }, 2000);
+    });
+  }
 
   // Close on Escape key
   document.addEventListener("keydown", function (e) {
