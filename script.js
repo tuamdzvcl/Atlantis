@@ -1100,16 +1100,16 @@ window.renderProductFromAPI = (data) => {
         </div>
 
         <!-- Thumbnails -->
-        <div id="productThumbnailsContainer" class="flex gap-2 mt-6 w-full justify-center overflow-x-auto pb-2">
+        <div id="productThumbnailsContainer" class="flex gap-2 mt-4 md:mt-6 w-full justify-center overflow-x-auto pb-2">
           <!-- Sẽ được render lại qua JS -->
         </div>
       </div>
       
       <div class="p-4 md:p-8 md:w-1/2 flex flex-col justify-center">
-        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">${data.name
+        <h3 class="text-[26px] md:text-4xl font-bold text-gray-900 mb-2">${data.name
     }</h3>
         
-        <div class="flex items-center gap-1.5 md:gap-3 mb-4 text-[11px] sm:text-lg md:text-sm whitespace-nowrap">
+        <div class="flex items-center gap-1.5 md:gap-3 mb-2 md:mb-4 text-[11px] sm:text-lg md:text-sm whitespace-nowrap">
           <div class="flex text-yellow-400">
             <i class="ph-fill ph-star"></i>
           </div>
@@ -1124,7 +1124,7 @@ window.renderProductFromAPI = (data) => {
           </div>
         </div>
 
-        <div class="flex gap-1.5 md:gap-3 mb-6 items-end whitespace-nowrap">
+        <div class="flex gap-1.5 md:gap-3 mb-3 md:mb-6 items-end whitespace-nowrap">
           <span id="currentPrice" class="text-2xl md:text-3xl font-bold text-accent leading-none">${defaultMaterial.price.toLocaleString(
       "vi-VN"
     )}₫</span>
@@ -1135,8 +1135,8 @@ window.renderProductFromAPI = (data) => {
     }%</span>
         </div>
 
-        <div class="mb-6">
-          <h4 class="text-sm font-semibold text-gray-900 mb-3">Chọn chất liệu:</h4>
+        <div class="mb-4 md:mb-6">
+          <h4 class="text-sm font-semibold text-gray-900 mb-2 md:mb-3">Chọn chất liệu:</h4>
           <div class="flex gap-3">
             ${data.materials
       .map(
@@ -1161,7 +1161,7 @@ window.renderProductFromAPI = (data) => {
           </div>
         </div>
 
-        <div class="mb-8 space-y-3 text-base text-gray-600 flex-1">
+        <div class="mb-4 md:mb-8 space-y-2 md:space-y-3 text-sm md:text-base text-gray-600 flex-1">
           ${data.features
       .map(
         (f) => `
@@ -1173,9 +1173,9 @@ window.renderProductFromAPI = (data) => {
       .join("")}
         </div>
         
-        <div class="flex flex-row gap-2 mt-auto">
-          <a href="#dathang" class="flex-1 bg-accent text-white text-center py-2 px-1 rounded-lg font-bold hover:bg-red-700 transition-colors shadow-lg text-sm sm:text-base flex items-center justify-center" onclick="gtag('event', 'begin_checkout');">MUA NGAY</a>
-          <a href="tel:0329585872" class="flex-1 bg-white border-2 border-primary text-primary text-center py-2 px-1 rounded-lg font-bold hover:bg-blue-50 transition-colors text-xs sm:text-base flex items-center justify-center" onclick="gtag('event', 'click_phone');">HỖ TRỢ TƯ VẤN</a>
+        <div class="flex flex-col sm:flex-row gap-2 mt-auto">
+          <a href="#dathang" class="flex-1 bg-accent text-white text-center py-3 px-2 rounded-lg font-bold hover:bg-red-700 transition-colors shadow-lg text-base flex items-center justify-center" onclick="gtag('event', 'begin_checkout');">MUA NGAY</a>
+          <a href="tel:0329585872" class="flex-1 bg-white border-2 border-primary text-primary text-center py-3 px-2 rounded-lg font-bold hover:bg-blue-50 transition-colors text-base flex items-center justify-center" onclick="gtag('event', 'click_phone');">HỖ TRỢ TƯ VẤN</a>
         </div>
       </div>
     </div>
@@ -1482,6 +1482,7 @@ document.addEventListener("DOMContentLoaded", () => {
     void orderPopupOverlay.offsetWidth;
     orderPopupOverlay.classList.add("opacity-100");
     orderPopupOverlay.classList.remove("opacity-0");
+    document.body.style.overflow = "hidden"; // Khóa cuộn trang
   }
 
   function closeOrderPopup() {
@@ -1491,6 +1492,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       orderPopupOverlay.classList.add("hidden");
       orderPopupOverlay.classList.remove("flex");
+      document.body.style.overflow = ""; // Mở khóa cuộn trang
     }, 300);
   }
 

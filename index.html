@@ -579,9 +579,9 @@
   </section>
 
   <!-- Promotional Pricing Section -->
-  <section id="banggia" class="py-16 bg-gray-50">
+  <section id="banggia" class="py-8 md:py-16 bg-gray-50">
     <div class="container mx-auto max-w-6xl px-4">
-      <div class="text-center mb-12" data-aos="fade-down">
+      <div class="text-center mb-6 md:mb-12" data-aos="fade-down">
         <div class="inline-block animate-shake-periodic">
           <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 uppercase">
             Bảng Giá Khuyến Mãi
@@ -1205,15 +1205,15 @@
             <input type="hidden" name="utm_term" id="utm_term" />
 
             <input type="hidden" name="orderStatus" id="staticOrderStatus" value="Đặt Hàng" />
-            <div class="flex flex-row gap-2 mt-6">
+            <div class="flex flex-col sm:flex-row gap-3 mt-6">
               <button type="submit" id="submitOrderBtn"
                 onclick="document.getElementById('staticOrderStatus').value='Đặt Hàng'"
-                class="w-3/5 bg-accent text-white font-bold text-sm sm:text-lg py-3 rounded-lg hover:bg-red-700 transition-colors shadow-lg">
+                class="w-full sm:w-3/5 bg-accent text-white font-bold text-base sm:text-lg py-3.5 sm:py-3 rounded-lg hover:bg-red-700 transition-colors shadow-lg">
                 HOÀN TẤT ĐẶT HÀNG
               </button>
               <button type="submit" id="submitConsultBtn"
                 onclick="document.getElementById('staticOrderStatus').value='Cần Tư Vấn'"
-                class="w-2/5 bg-white border-2 border-primary text-primary flex items-center justify-center font-bold text-xs sm:text-lg py-2.5 rounded-lg hover:bg-blue-50 transition-colors text-center leading-tight">
+                class="w-full sm:w-2/5 bg-white border-2 border-primary text-primary flex items-center justify-center font-bold text-base sm:text-lg py-3 sm:py-2.5 rounded-lg hover:bg-blue-50 transition-colors text-center leading-tight">
                 <i class="ph-fill ph-phone-call mr-1 text-base"></i> HỖ TRỢ TƯ VẤN
               </button>
             </div>
