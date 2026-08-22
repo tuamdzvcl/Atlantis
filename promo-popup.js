@@ -82,6 +82,9 @@
 
     createConfetti();
     sessionStorage.setItem("atlantisPromoShown", "1");
+    if (typeof gtag === 'function') {
+      gtag('event', 'promo_view');
+    }
   }
 
   // --- Close Popup ---
@@ -130,6 +133,9 @@
 
   // CTA: Show the form instead of scrolling
   ctaBtn.addEventListener("click", function () {
+    if (typeof gtag === 'function') {
+      gtag('event', 'promo_click');
+    }
     if (defaultView && leadForm) {
       defaultView.classList.add("hidden");
       leadForm.classList.remove("hidden");
@@ -180,6 +186,10 @@
         body: formData,
         mode: 'no-cors'
       }).catch(error => console.error('Error!', error.message));
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead');
+      }
 
       // Bắt buộc hiển thị thành công sau 2s
       setTimeout(() => {

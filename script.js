@@ -783,6 +783,9 @@ document.addEventListener("DOMContentLoaded", () => {
         title: "Đã gửi thông tin",
         text: "Cảm ơn bạn! Chúng tôi đã nhận được thông tin và sẽ liên hệ sớm nhất.",
       });
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead');
+      }
       closeLeadModal();
 
       // Ẩn nút xem thêm bình luận sau khi gửi form thành công
@@ -882,6 +885,14 @@ document.addEventListener("DOMContentLoaded", () => {
           value: 0,
           currency: "VND",
           content_name: "Bếp Trụng Đa Năng Atlantis",
+        });
+      }
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'purchase', {
+          currency: "VND",
+          value: 0,
+          items: [{ item_name: "Bếp Trụng Đa Năng Atlantis" }]
         });
       }
 
@@ -1163,8 +1174,8 @@ window.renderProductFromAPI = (data) => {
         </div>
         
         <div class="flex flex-row gap-2 mt-auto">
-          <a href="#dathang" class="flex-1 bg-accent text-white text-center py-2 px-1 rounded-lg font-bold hover:bg-red-700 transition-colors shadow-lg text-sm sm:text-base flex items-center justify-center">MUA NGAY</a>
-          <a href="tel:0329585872" class="flex-1 bg-white border-2 border-primary text-primary text-center py-2 px-1 rounded-lg font-bold hover:bg-blue-50 transition-colors text-xs sm:text-base flex items-center justify-center">HỖ TRỢ TƯ VẤN</a>
+          <a href="#dathang" class="flex-1 bg-accent text-white text-center py-2 px-1 rounded-lg font-bold hover:bg-red-700 transition-colors shadow-lg text-sm sm:text-base flex items-center justify-center" onclick="gtag('event', 'begin_checkout');">MUA NGAY</a>
+          <a href="tel:0329585872" class="flex-1 bg-white border-2 border-primary text-primary text-center py-2 px-1 rounded-lg font-bold hover:bg-blue-50 transition-colors text-xs sm:text-base flex items-center justify-center" onclick="gtag('event', 'click_phone');">HỖ TRỢ TƯ VẤN</a>
         </div>
       </div>
     </div>
@@ -1519,6 +1530,14 @@ document.addEventListener("DOMContentLoaded", () => {
         mode: "no-cors"
       }).catch(e => console.error(e));
 
+      if (typeof gtag === 'function') {
+        gtag('event', 'purchase', {
+          currency: "VND",
+          value: 0,
+          items: [{ item_name: "Bếp Trụng Đa Năng Atlantis (Popup Form)" }]
+        });
+      }
+
       // Chuyển hướng sang trang Cảm ơn sau 2s
       setTimeout(() => {
         window.location.href = "camon/index.html";
@@ -1537,6 +1556,15 @@ document.addEventListener("DOMContentLoaded", () => {
         submitter.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-xl mr-2 inline-block"></i> Đang xử lý...';
         submitter.disabled = true;
       }
+      
+      if (typeof gtag === 'function') {
+        gtag('event', 'purchase', {
+          currency: "VND",
+          value: 0,
+          items: [{ item_name: "Bếp Trụng Đa Năng Atlantis (Static Form)" }]
+        });
+      }
+
       setTimeout(() => {
         window.location.href = "camon/index.html";
       }, 2000);
